@@ -19,7 +19,7 @@ class App extends React.Component{
       <div className="App">
         {!this.props.isSignedUp?
             <Switch>
-              <Route path='/' exact component={!this.props.isSignedUp?SignUpPage:Account}/>
+              <Route path='/' exact component={SignUpPage}/>
               <Route path='/sign-up' exact component={SignUpPage}/>
               <Route path='/sign-in' exact component={SignInPage}/>
               <Redirect to='/sign-up'/>

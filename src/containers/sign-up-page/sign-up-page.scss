@@ -21,6 +21,7 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
+    padding-top: 3rem;
     &-message{
         color: red;
     }
@@ -36,6 +37,7 @@
         align-items: center;
         border-radius: 2rem;
         padding: 2.5rem;
+        max-width: 32rem;
         background: rgba(255, 255, 255, 0.514);
         a{
             color: #324a6d;

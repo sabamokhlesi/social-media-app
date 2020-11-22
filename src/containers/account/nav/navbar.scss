@@ -1,0 +1,33 @@
+.navbar{
+    height: 8rem;
+    margin-bottom: 5rem;
+    padding: 0 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(194, 194, 194, 0.219);
+    img{height: 6rem; width: auto;}
+    &-list{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    &-item{
+        line-height: 0;
+        padding: .5rem 1rem;
+        a{
+            &:active,
+            &:visited,
+            &:link{
+                color: #00493e;
+            }
+            &:hover{color:#008d78 ;}
+        }
+        &-active{color: #42fce0;}
+    }
+    &-right{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

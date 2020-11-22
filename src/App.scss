@@ -1,8 +1,8 @@
 
 // COLOR VARIABLES
-$color-primary: #1194cc;
-$color-primary-light: #CDEBF8;
-$color-primary-dark:#134b63;
+$color-primary:#00D7B5;
+$color-primary-light: #f0fffd;
+$color-primary-dark:#00493e;
 
 $color-secondary: #F277A4;
 $color-secondary-light: #fccdde;
@@ -60,13 +60,6 @@ body{
     letter-spacing: 1px;
     line-height: 1.6;
     overflow-x: hidden;
-    // display: grid;
-    // grid-template-columns: 10rem repeat(10,1fr);
-    // grid-template-rows: 10rem repeat(2,70rem) repeat(5,min-content);
-    // @media only screen and (max-width:$bp-small) {
-    //     grid-template-columns: 7rem repeat(10,1fr);
-    //     grid-template-rows: 7rem repeat(2,68rem) repeat(5,min-content);
-    // }
 }
 
 .btn{
@@ -77,6 +70,7 @@ body{
     letter-spacing: 2px;
     outline: none;
     cursor: pointer;
+    background-color: transparent;
     border-radius: .5rem;
     padding: 1rem 2rem;
     border: none;
@@ -115,13 +109,13 @@ body{
         }
     }
     &-primary{
-        border: 2px solid $color-secondary;
+        border: 1px solid $color-primary-dark;
         background-color: transparent;
-        color: $color-secondary;
+        color: $color-primary-dark;
         font-weight: bolder;
         &:hover{
             color: white;
-            background-color: $color-secondary;
+            background-color: $color-primary-dark;
         }
     }
     &-secondary{

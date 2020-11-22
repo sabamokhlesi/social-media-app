@@ -1,7 +1,7 @@
 import React from 'react'
 import './sign-up-page.scss'
 import {Link} from 'react-router-dom'
-import SignUpImg from '../../images/2.png'
+import SignUpImg from '../../images/4.png'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/spinner/spinner'
@@ -41,7 +41,7 @@ class SignUpPage extends React.Component{
             <form className='sign-up'>
                 <div className='sign-up-form'>
                         <p>--Welcome--</p>
-                        <div className="sign-up-form-title h3">Start Budgeting!</div>
+                        <div className="sign-up-form-title h3">Join Us Now!</div>
                         <p className='sign-up-message'>{this.state.signUpMessage}</p>
                         <p className='sign-up-message'>{errorMessage}</p>
                         <div className="sign-up-form-fields">
