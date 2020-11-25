@@ -11,8 +11,8 @@ $color-secondary-dark:  #ec1d69;
 $color-grey-light-1: #e4e4e4;
 $color-grey-light-2: #bdbdbd;
 
-$color-grey-dark-1: #444444;
-$color-grey-dark-2: #6d6d6d;
+$color-grey-dark-1: #252525;
+$color-grey-dark-2: #4e4e4e;
 $color-grey-dark-3: #9c9c9c;
 
 //mediaqueries breakpoints
@@ -172,7 +172,6 @@ body{
 p{
     font-size: 1.6;
     font-weight: 500;
-    color: $color-grey-dark-3;
 }
 .heading-5{
     letter-spacing: 1px;
