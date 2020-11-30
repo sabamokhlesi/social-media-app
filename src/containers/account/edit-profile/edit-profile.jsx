@@ -28,10 +28,17 @@ const editProfile = (props) => {
                             <img id="previewImgEdit" src={photo} alt='preview'/>
                         </div>
                     </div>
-                    <div>
-                        Name: Saba
+                    <div className='edit-profile-info-box'>
+                        <div className='edit-profile-info'>
+                            <label for="edit-profile-name">Your Name</label>
+                            <input type="text" id="edit-profile-name" name="edit-profile-name" defaultValue='Saba Mokhlesi' placeholder='i.e John'/>
+                        </div>
+                        <div className='edit-profile-info'>
+                            <label for="edit-profile-bio">Your Bio</label>
+                            <input type="text" id="edit-profile-bio" name="edit-profile-bio" defaultValue='Lorem, ipsum dolor sit amet adipisicing elit.' placeholder='Interested in ...'/>
+                        </div>
                     </div>
-                    <button className='btn btn-four'>save</button>
+                    <button className='btn btn-primary'>save</button>
                 </div>
         </div>
     )

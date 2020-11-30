@@ -46,6 +46,29 @@
             width: 100%;
         }
     }
+    &-info-box{
+        display: flex;
+        flex-direction: column;
+        padding: 4rem;
+    }
+    &-info{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem 0;
+        label{color: rgb(138, 138, 138);}
+        input{
+            border: none;
+            border-bottom: 2px solid #00493e;
+            margin-bottom: 3rem;
+            padding-top: .5rem;
+            outline: none;
+            color: inherit;
+            font: inherit;
+            &:focus{
+                border-bottom: 2px solid #00cfb0;
+            }
+        }
+    }
 }
 
 .edit-btn {

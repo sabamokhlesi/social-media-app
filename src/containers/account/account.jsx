@@ -12,15 +12,18 @@ import SearchPage from './search-page/search-page'
 class Account extends React.Component{
     state={
         addPostOpen:false,
-        editProfileOpen:false}
+        editProfileOpen:false,
+        user:{
+            name:'saba-mokhlesi'
+        }
+    }
     render(){
         return (
             <div>
                 <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path='/profile' exact render={() => <Profile onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
-                    {/* <Route path='/create-post' exact component={CreatePostPage} /> */}
+                    <Route path={`/${this.state.user.name}`} render={() => <Profile user={this.state.user} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
