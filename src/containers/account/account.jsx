@@ -6,20 +6,27 @@ import * as actions from '../../store/actions/index'
 import Home from './home/home'
 import Profile from './profile/profile'
 import CreatePostPage from './create-post-page/create-post-page'
+import EditProfile from './edit-profile/edit-profile'
 import SearchPage from './search-page/search-page'
 
 class Account extends React.Component{
+    state={
+        addPostOpen:false,
+        editProfileOpen:false}
     render(){
         return (
             <div>
-                <NavBar onLogOutClick={this.props.onLogOut}/>
+                <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path='/profile' exact component={Profile} />
-                    <Route path='/create-post' exact component={CreatePostPage} />
+                    <Route path='/profile' exact render={() => <Profile onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
+                    {/* <Route path='/create-post' exact component={CreatePostPage} /> */}
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
+                <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}}/>
+                <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}}/>
+                <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false})}></div>
             </div>
         )
     }

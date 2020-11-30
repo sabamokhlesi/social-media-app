@@ -2,13 +2,13 @@ import React from'react'
 import './home.scss'
 import photo from '../../../images/photo.jpg'
 import photo2 from '../../../images/example-photo.png'
-import { FaHeart,FaRegComment,FaRegHeart } from "react-icons/fa";
+import { FaHeart,FaRegComment,FaRegHeart } from "react-icons/fa"
 
 const home = (props) => {
     return (
         <div className='home'>
             <div className='posts'>
-                <div className='post' onDblclick={props.dblclicked}>
+                <div className='post' onDoubleClick={props.dblclicked}>
                     <div className='post-top'>
                         <div className='post-top-img-box'><img src={photo} alt="Jane Smith"/></div>
                         <h4>Jane Smith</h4>
@@ -21,7 +21,7 @@ const home = (props) => {
                     </div>
                     <div className='post-caption'>
                         <h4>Jane Smith</h4>
-                        <p>Lorem ipsum dolor sit amet adipisicing elit. Harum maxime voluptas accusamus aspernatur nostrum?</p>
+                        <p>Lorem ipsum dolor sit amet adipisicing elit.</p>
                     </div>
                     <div className='post-comments'>
                         <h4>12 Comments</h4>

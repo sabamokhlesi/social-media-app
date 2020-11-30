@@ -1,0 +1,92 @@
+
+.new-post{
+    background-color: white;
+    width: 45rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(175, 175, 175);
+    padding: 1.5rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 150;
+    border-radius: .5rem;
+    &-top{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgb(175, 175, 175);
+
+    }
+    &-body{
+        display: flex;
+        flex-direction: column;
+
+    }
+    &-caption{
+        display: flex;
+        input{
+            padding: 1.5rem 2rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: rgba(209, 209, 209, 0.26);
+            outline: none;
+            transition: all .2s;
+            font: inherit;
+            &:focus{
+                border: 1px solid #007c6a; 
+            }
+        }
+    }
+    &-upload-photo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        img{
+            width: 100%;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+    }
+}
+
+.file-btn {
+    padding: 2rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    label{ background-color: #00493e; color: white;}
+    input{
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        z-index: -1;
+    }
+}
+
+.modal-overlay {
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes shake{
+	0%{transform: rotate(0deg);}
+	25%{transform: rotate(10deg);}
+	50%{transform: rotate(0deg);}
+	75%{transform: rotate(-10deg);}
+	100%{transform: rotate(0deg);}
+}
+

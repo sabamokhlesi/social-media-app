@@ -20,7 +20,8 @@ const navbar = (props) => {
                         <NavLink activeClassName='navbar-item-active' exact to='/profile' className='btn' onClick={props.onNavItemClicked}><FaRegUserCircle size='2.4rem'/></NavLink>
                     </div>
                     <div className='navbar-item'>
-                        <NavLink activeClassName='navbar-item-active' exact to='/create-post' className='btn' onClick={props.onNavItemClicked}><FaPlus size='2.4rem'/></NavLink>
+                        {/* <NavLink activeClassName='navbar-item-active' exact to='/create-post' className='btn' onClick={props.onNavItemClicked}><FaPlus size='2.4rem'/></NavLink> */}
+                        <button exact onClick={props.addPostClick} className='btn'><FaPlus size='2.4rem'/></button>
                     </div>
                 </div>
                 <button className='btn btn-primary' onClick={props.onLogOutClick}>Log Out</button>

@@ -2,7 +2,7 @@ import React from'react'
 import './profile.scss'
 import photo from '../../../images/photo.jpg'
 import {FaPencilAlt} from "react-icons/fa"
-import {NavLink,Route,Switch,Redirect,Link} from 'react-router-dom'
+import {NavLink,Route,Switch,Redirect} from 'react-router-dom'
 
 const profile = (props) => {
     return (
@@ -11,7 +11,7 @@ const profile = (props) => {
                 <div className='profile-top-img-box'><img src={photo} alt="profile"/></div>
                 <div className='profile-top-name'>
                     <h2>Saba Mokhlesi</h2>
-                    <Link to='/account/settings' ><FaPencilAlt/> Edit profile</Link>
+                    <button onClick={props.onEditProfileClick} ><FaPencilAlt/> Edit profile</button>
                 </div>
                 <div className='profile-nav'>
                     <NavLink activeClassName='profile-nav-item-active' to='/profile' exact className='profile-nav-item' >35 posts</NavLink>
