@@ -14,7 +14,7 @@ class Account extends React.Component{
         addPostOpen:false,
         editProfileOpen:false,
         user:{
-            name:'saba-mokhlesi'
+            userName:'saba-mokhlesi'
         }
     }
     render(){
@@ -23,7 +23,7 @@ class Account extends React.Component{
                 <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path={`/${this.state.user.name}`} render={() => <Profile user={this.state.user} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
+                    <Route path={`/${this.state.user.userName}`} render={() => <Profile user={this.state.user} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
@@ -40,4 +40,5 @@ const mapDispatchToProps = dispatch =>{
     return{
     onLogOut : () => dispatch(actions.logout())
 }}
+
 export default connect(null,mapDispatchToProps)(Account)
