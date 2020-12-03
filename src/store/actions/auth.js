@@ -22,10 +22,10 @@ export const checkAuthTimeout = (expirationTime) => {
 };
 
 
-export const addUser = (email,password,name,isValid) =>{
+export const addUser = (email,password,userName,isValid) =>{
     return dispatch => {
         isValid? dispatch(authStart()):dispatch(authFail('invalid info'))
-        const authData = {email:email,password:password,name:name}
+        const authData = {email:email,password:password,userName:userName}
         
         const url = 'http://localhost:8080/auth/signup'
         // const url = 'https://budget-manager-app-backend.herokuapp.com/auth/signup'

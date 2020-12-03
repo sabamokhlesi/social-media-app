@@ -17,6 +17,11 @@ class Account extends React.Component{
             userName:'saba-mokhlesi'
         }
     }
+
+    // componentDidMount(){
+    //     this.props.onFetchUserInfo(this.props.token,this.props.userId)
+    //   }
+
     render(){
         return (
             <div>
@@ -27,7 +32,7 @@ class Account extends React.Component{
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
-                <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}}/>
+                <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} postClicked={this.props.onPostClicked} token={this.props.token}/>
                 <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}}/>
                 <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false})}></div>
             </div>
@@ -36,9 +41,18 @@ class Account extends React.Component{
     
 }
 
+const mapStateToProps = state =>{
+    return{
+        token : state.auth.token
+    }
+}
+
 const mapDispatchToProps = dispatch =>{
     return{
     onLogOut : () => dispatch(actions.logout())
+    ,onPostClicked: (postInfo,token) => dispatch(actions.createPost(postInfo,token))
+    // ,onFetchUserInfo:(token,userId)=>{dispatch(actions.fetchUserInfo(token,userId))}
 }}
 
-export default connect(null,mapDispatchToProps)(Account)
+
+export default connect(mapStateToProps,mapDispatchToProps)(Account)

@@ -30,11 +30,11 @@ const editProfile = (props) => {
                     </div>
                     <div className='edit-profile-info-box'>
                         <div className='edit-profile-info'>
-                            <label for="edit-profile-name">Your Name</label>
+                            <label htmlFor="edit-profile-name">Your Name</label>
                             <input type="text" id="edit-profile-name" name="edit-profile-name" defaultValue='Saba Mokhlesi' placeholder='i.e John'/>
                         </div>
                         <div className='edit-profile-info'>
-                            <label for="edit-profile-bio">Your Bio</label>
+                            <label htmlFor="edit-profile-bio">Your Bio</label>
                             <input type="text" id="edit-profile-bio" name="edit-profile-bio" defaultValue='Lorem, ipsum dolor sit amet adipisicing elit.' placeholder='Interested in ...'/>
                         </div>
                     </div>

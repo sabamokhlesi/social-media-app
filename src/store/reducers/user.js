@@ -2,18 +2,17 @@ import * as actionTypes from '../actions/action-types'
 
 const initialState ={
     userInfo:{
-        userId:'',
+        _id:'',
         userName:'',
         name:'',
         Bio:'',
-        followers:{},
-        followings:{},
-        posts:{}
+        followers:[],
+        followings:[],
+        posts:[]
     },
     loading:false,
     error:null
 }
-
 
 const reducer = (state=initialState,action) => {
     switch(action.type){

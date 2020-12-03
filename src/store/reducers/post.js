@@ -1,7 +1,15 @@
 import * as actionTypes from '../actions/action-types'
 
 const initialState ={
-    posts:{},
+    posts:[
+        {
+            _id:'',
+            content:[{date:'',caption:'',image:''}],
+            userId:'',
+            likes:[{userId:'',date:''}],
+            comments:[{userId:'',content:'',date:''}]
+        }
+    ],
     loading:false,
     error:null
 }

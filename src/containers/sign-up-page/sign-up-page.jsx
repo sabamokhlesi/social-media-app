@@ -18,13 +18,13 @@ class SignUpPage extends React.Component{
         if(!this.termsAndConditions.checked) {message = 'Please agree to the terms';valid = false}
         if (this.signUpPass.value.trim().length < 6) {message = 'password is too short'; valid = false} 
         if(this.signUpPassRepeat.value !== this.signUpPass.value){message = 'Enter the same password'; valid = false}
-        if (this.name.value.trim().length < 1) {message = 'Please enter your name and last name'; valid = false}
+        if (this.userName.value.trim().length < 1) {message = 'Please enter a username'; valid = false}
         if (!emailPattern.test(this.signUpEmail.value)){message= 'invalid email'; valid = false}
         if(message === null){
-            this.props.onSignUp(this.signUpEmail.value,this.signUpPass.value,this.name.value,valid);
+            this.props.onSignUp(this.signUpEmail.value,this.signUpPass.value,this.userName.value,valid);
             this.signUpPass.value = ''
             this.signUpPassRepeat.value =''
-            this.name.value=''
+            this.userName.value=''
             this.signUpEmail.value = ''
             this.termsAndConditions.checked = false
         } 
@@ -46,8 +46,7 @@ class SignUpPage extends React.Component{
                         <p className='sign-up-message'>{errorMessage}</p>
                         <div className="sign-up-form-fields">
                             <div className="sign-up-form-field"><input key='sign-up-email' ref={input => {this.signUpEmail = input;}} type="email" className="sign-up-form-username" placeholder="Email"/></div>
-                            <div className="sign-up-form-field"><input key='sign-up-name' ref={input => {this.name = input;}} type="text" className="sign-up-form-username" placeholder="name"/></div>
-                            {/* <div className="sign-up-form-field"><input key='sign-up-last-name' ref={input => {this.lastName = input;}} type="text" className="sign-up-form-username" placeholder="Last name"/></div> */}
+                            <div className="sign-up-form-field"><input key='sign-up-name' ref={input => {this.userName = input;}} type="text" className="sign-up-form-username" placeholder="username"/></div>
                             <div className="sign-up-form-field"><input key='sign-up-pass'  autoComplete='new-password' ref={input => {this.signUpPass = input;}} type="password" className="sign-up-form-password" placeholder="Password" /></div>
                             <div className="sign-up-form-field"><input key='sign-up-pass-repeat' ref={input => {this.signUpPassRepeat = input;}} type="password" className="sign-up-form-password" placeholder="Repeat Your Password" /></div>
                             <input type="checkbox" id="termsAndConditions" name="termsAndConditions" ref={input => {this.termsAndConditions = input;}}></input>
@@ -82,7 +81,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        onSignUp : (email,password,name,isValid) => dispatch(actions.addUser(email,password,name,isValid))
+        onSignUp : (email,password,userName,isValid) => dispatch(actions.addUser(email,password,userName,isValid))
     }
 } 
 export default connect(mapStateToProps,mapDispatchToProps)(SignUpPage)
