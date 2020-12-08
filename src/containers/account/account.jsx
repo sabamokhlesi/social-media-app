@@ -8,19 +8,25 @@ import Profile from './profile/profile'
 import CreatePostPage from './create-post-page/create-post-page'
 import EditProfile from './edit-profile/edit-profile'
 import SearchPage from './search-page/search-page'
+import MessageModal from '../../components/message-modal/message-modal.jsx'
 
 class Account extends React.Component{
     state={
         addPostOpen:false,
         editProfileOpen:false,
+        showMessage:false,
         user:{
             userName:'saba-mokhlesi'
         }
     }
 
-    // componentDidMount(){
-    //     this.props.onFetchUserInfo(this.props.token,this.props.userId)
-    //   }
+    componentDidMount(){
+        this.props.onFetchPosts(this.props.token,this.props.userId)
+      }
+    postClickedHandler=()=>{
+        // this.props.onPostClicked()
+        this.setState({showMessage:true})
+    }
 
     render(){
         return (
@@ -32,9 +38,12 @@ class Account extends React.Component{
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
-                <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} postClicked={this.props.onPostClicked} token={this.props.token}/>
+                {this.state.showMessage?
+                    <MessageModal style={this.state.showMessage?{display:'flex'}:{display:'none'}} closeClicked={()=>this.setState({showMessage:false,addPostOpen:false})} loading={this.props.loading}>{this.props.postMessage}</MessageModal>:
+                    <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} changeState={()=>this.setState({showMessage:true})} postClicked={this.props.onPostClicked} token={this.props.token}/>
+                }
                 <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}}/>
-                <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false})}></div>
+                <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen || this.state.showMessage?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false,showMessage:false})}></div>
             </div>
         )
     }
@@ -43,7 +52,10 @@ class Account extends React.Component{
 
 const mapStateToProps = state =>{
     return{
-        token : state.auth.token
+        token : state.auth.token,
+        postMessage: state.post.message,
+        loading:state.post.loading,
+        userId:state.auth.userId
     }
 }
 
@@ -51,7 +63,7 @@ const mapDispatchToProps = dispatch =>{
     return{
     onLogOut : () => dispatch(actions.logout())
     ,onPostClicked: (postInfo,token) => dispatch(actions.createPost(postInfo,token))
-    // ,onFetchUserInfo:(token,userId)=>{dispatch(actions.fetchUserInfo(token,userId))}
+    ,onFetchPosts:(token,userId)=>{dispatch(actions.fetchPosts(token,userId))}
 }}
 
 

@@ -8,12 +8,12 @@ import {createStore,applyMiddleware,compose,combineReducers} from 'redux'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import authReducer from './store/reducers/auth'
-// import spendingListsReducer from './store/reducers/spending-lists'
-// import budgetCalculatorReducer from './store/reducers/budget-calculator'
+import postReducer from './store/reducers/post'
+import userReducer from './store/reducers/user'
 import reportWebVitals from './reportWebVitals';
 
 const rootReducer = combineReducers({auth:authReducer
-  // ,list:spendingListsReducer,budgetCal:budgetCalculatorReducer
+  ,post:postReducer,user:userReducer
 })
 const composeEnhancers =process.env.NODE_ENV=== 'development' ?window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__: null || compose
 const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)))

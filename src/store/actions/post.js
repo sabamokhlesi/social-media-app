@@ -2,27 +2,27 @@ import * as actionTypes from './action-types'
 
 export const postStart=() =>{return{type:actionTypes.POST_START}}
 export const postFailed =(error) =>{return{type:actionTypes.POST_FAILED,error:error}}
-export const postSuccess =(id,data) =>{return{type:actionTypes.POST_SUCCESSFUL,postId:id, postData:data }}
+export const postSuccess =(postInfo) =>{return{type:actionTypes.POST_SUCCESSFUL,postInfo:postInfo }}
 
 export const createPost = (postInfo,token) =>{
-    console.log(postInfo)
     const formData = new FormData();
-    formData.append('caption', postInfo.caption);
-    formData.append('image', postInfo.image);
-    console.log(formData)
-    console.log(token)
+    formData.append('caption', postInfo.caption)
+    formData.append('image', postInfo.image)
     return dispatch => {
         dispatch(postStart())
         fetch('http://localhost:8080/account/post', 
         // fetch('https://buddy-app-backend.herokuapp.com/account/post', 
             {method: 'POST',body:formData, headers: {Authorization: 'Bearer ' + token}})
         .then(res => {
+            console.log(res.status)
             if (res.status !== 200 && res.status !== 201) {throw new Error('Creating the post failed!');}
             return res.json();
             })
         .then(res =>{
-            console.log(res)
-            // dispatch(postSuccess(res.post._id,postInfo))
+            // console.log(res.post)
+            const image = 'http://localhost:8080/' + res.post.imageUrl
+            // console.log(image)
+            dispatch(postSuccess(res.post))
         })
         .catch(err=>{dispatch(postFailed(err))})
     }
@@ -37,8 +37,8 @@ export const deletePost = (postId,token) =>{
     return dispatch => {
         dispatch(deletePostStart())
         
-        fetch(`http://localhost:8080/buddy/post/${postId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/buddy/post/${postId}`, {
+        fetch(`http://localhost:8080/account/post/${postId}`, {
+        // fetch(`https://buddy-app-backend.herokuapp.com/account/post/${postId}`, {
             method: 'DELETE',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -58,15 +58,9 @@ export const fetchPostsStart =() => {return{type: actionTypes.FETCH_POSTS_START}
 export const fetchPosts = (token,userId) =>{
     return dispatch => {
         dispatch(fetchPostsStart())
-        
-        const toDate = (new Date().getFullYear()+'-'+('0'+(new Date().getMonth()+1)).slice(-2)+'-'+('0'+new Date().getDate()).slice(-2)).toString()
-        const fromDate = (
-            (new Date().getMonth() !== 0?new Date().getFullYear():new Date().getFullYear()-1)+'-'
-            +('0'+(new Date().getMonth()!==0? new Date().getMonth():12)).slice(-2)+'-01'
-            ).toString()
             
-        fetch(`http://localhost:8080/buddy/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
-        // fetch(`https://buddy-app-backend.herokuapp.com/buddy/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
+        fetch(`http://localhost:8080/account/posts/${userId}`
+        // fetch(`https://buddy-app-backend.herokuapp.com/account/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
             ,{method: 'GET',headers: {Authorization: 'Bearer ' + token}})
             .then(res => {
                 if (res.status !== 200) {throw new Error('Failed to fetch posts.')}
