@@ -23,7 +23,7 @@ const reducer = (state=initialState,action) => {
         case actionTypes.FETCH_POSTS_FAILED:return{...state, loading:false, error:action.error}
 
         case actionTypes.POST_START:return{...state, loading:true, error:null,message:null}
-        case actionTypes.POST_SUCCESSFUL:return{...state,posts:[...state.posts.concat([{...action.postInfo, image:'http://localhost:8080/' + action.postInfo.imageUrl}])], loading:false, error:null,message:'Added post successfully!'}
+        case actionTypes.POST_SUCCESSFUL:return{...state,posts:[action.postInfo,...state.posts], loading:false, error:null,message:'Added post successfully!'}
         case actionTypes.POST_FAILED:return{...state, loading:false, error:action.error,message:'Adding the post failed!'}
 
         case actionTypes.DELETE_POST_START:return{...state, loading:false, error:null}

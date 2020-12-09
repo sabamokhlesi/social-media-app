@@ -25,18 +25,16 @@ class Account extends React.Component{
         this.props.onFetchPosts(this.props.token,this.props.userId)
         this.props.onFetchUserInfo(this.props.token,this.props.userId)
       }
-    postClickedHandler=()=>{
-        // this.props.onPostClicked()
-        this.setState({showMessage:true})
-    }
 
+      componentDidUpdate(){console.log(this.props.posts[0].imageUrl)}
     render(){
         return (
             <div>
                 <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path={`/${this.props.userInfo.userName}`} render={() => <Profile userInfo={this.props.userInfo} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
+                    <Route path={`/${this.props.userInfo.userName}`} render={() => 
+                        <Profile posts={this.props.posts} userInfo={this.props.userInfo} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>}/>
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
@@ -57,7 +55,8 @@ const mapStateToProps = state =>{
         postMessage: state.post.message,
         loading:state.post.loading,
         userId:state.auth.userId,
-        userInfo:state.user.userInfo
+        userInfo:state.user.userInfo,
+        posts:state.post.posts
     }
 }
 

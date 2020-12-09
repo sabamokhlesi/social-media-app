@@ -50,6 +50,7 @@
                 }
             }
         }
+        
     }
     &-nav{
         width: 50rem;
@@ -74,6 +75,18 @@
 
     }
     &-body{
-        
+        width: 50rem;
+        padding-top: 3px;
+    }
+
+    &-posts{
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 3px;
+    }
+    &-post{
+        height: 25rem;
+        background-position: center;
+        background-size: cover;
     }
 }
