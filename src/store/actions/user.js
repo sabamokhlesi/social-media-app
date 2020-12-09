@@ -5,15 +5,14 @@ export const fetchUserInfoFail = (error) => {return{type: actionTypes.FETCH_USER
 export const fetchUserInfoStart =() => {return{type: actionTypes.FETCH_USERINFO_START}}
 
 export const fetchUserInfo = (token,userId) =>{
-    
     return dispatch => {
         dispatch(fetchUserInfoStart())
-        fetch(`http://localhost:8080/social-media/user-info/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-info/${userId}`, {
+        fetch(`http://localhost:8080/account/user-info/${userId}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/account/user-info/${userId}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
-        if (res.status !== 200 && res.status !== 201) {throw new Error('Fetching information failed!');}
+        if (res.status !== 200 && res.status !== 201) {throw new Error('Fetching information failed!')}
         return res.json();
         })
         .then(res=>{
@@ -22,31 +21,35 @@ export const fetchUserInfo = (token,userId) =>{
     }
 }
 
-export const saveChangedSettingsInfoSuccess = (info) =>{return{type: actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS,userInfo: info }}
-export const saveChangedSettingsInfoFail = (error) => {return{type: actionTypes.SAVE_SETTINGS_CHANGES_FAILED,error: error}}
+
+export const saveChangedSettingsInfoSuccess = (newInfo) =>{return{type: actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS,newInfo: newInfo }}
+export const saveChangedSettingsInfoFail = (error) => {return{type: actionTypes.SAVE_SETTINGS_CHANGES_FAIL,error: error}}
 export const saveChangedSettingsInfoStart =() => {return{type: actionTypes.SAVE_SETTINGS_CHANGES_START}}
 
-
 export const saveChangedSettingsInfo =(newInfo,token,userId)=>{
+    const formData = new FormData();
+    formData.append('name', newInfo.name)
+    formData.append('bio', newInfo.bio)
+    formData.append('image', newInfo.avatarImgUrl)
     return dispatch => {
         dispatch(saveChangedSettingsInfoStart())
-        fetch(`http://localhost:8080/social-media/user-info/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-info/${userId}`, {
-            method: 'put',body:JSON.stringify(newInfo) ,headers: {Authorization: 'Bearer ' + token,'Content-Type': 'application/json'}
+        fetch(`http://localhost:8080/account/user-info/${userId}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/account/user-info/${userId}`, {
+            method: 'PUT',body:formData ,headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
         if (res.status !== 200 && res.status !== 201) {throw new Error('Updating information failed!');}
         return res.json();
         })
-        .then(res =>{dispatch(saveChangedSettingsInfoSuccess(newInfo))})
+        .then(res =>{dispatch(saveChangedSettingsInfoSuccess(res.userInfo))})
         .catch(err=>{dispatch(saveChangedSettingsInfoFail(err))})
     }
 }
 
+
 export const followSuccess = (newFollowing) =>{return{type: actionTypes.FOLLOW_SUCCESS,newFollowing: newFollowing }}
 export const followFail = (error) => {return{type: actionTypes.FOLLOW_FAILED,error: error}}
 export const followStart =() => {return{type: actionTypes.FOLLOW_START}}
-
 
 export const follow =(newFollowing,token,userId)=>{
     return dispatch => {
@@ -67,9 +70,8 @@ export const follow =(newFollowing,token,userId)=>{
 
 
 export const unfollowSuccess = (unfollowedUser) =>{return{type: actionTypes.UNFOLLOW_SUCCESS,unfollowedUser: unfollowedUser }}
-export const unfollowFail = (error) => {return{type: actionTypes.UNFOLLOW_FAILED,error: error}}
+export const unfollowFail = (error) => {return{type: actionTypes.UNFOLLOW_FAIL,error: error}}
 export const unfollowStart =() => {return{type: actionTypes.UNFOLLOW_START}}
-
 
 export const unfollow =(unfollowedUser,token,userId)=>{
     return dispatch => {

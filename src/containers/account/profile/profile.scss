@@ -22,10 +22,11 @@
         
         &-name{
             display: flex;
+            flex-direction: column-reverse;
             align-items: center;
             justify-content: center;
-            padding: 2rem 2rem 5rem 2rem;
-            h2{color: #00493e;}
+            padding: 2rem 2rem 3rem 2rem;
+            h2{color: #00493e;padding-top: .5rem;}
             button{
                 cursor: pointer;
                 padding: .5rem;

@@ -15,6 +15,7 @@ class Account extends React.Component{
         addPostOpen:false,
         editProfileOpen:false,
         showMessage:false,
+        showSettingsMessage:false,
         user:{
             userName:'saba-mokhlesi'
         }
@@ -22,6 +23,7 @@ class Account extends React.Component{
 
     componentDidMount(){
         this.props.onFetchPosts(this.props.token,this.props.userId)
+        this.props.onFetchUserInfo(this.props.token,this.props.userId)
       }
     postClickedHandler=()=>{
         // this.props.onPostClicked()
@@ -34,7 +36,7 @@ class Account extends React.Component{
                 <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path={`/${this.state.user.userName}`} render={() => <Profile user={this.state.user} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
+                    <Route path={`/${this.props.userInfo.userName}`} render={() => <Profile userInfo={this.props.userInfo} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>} />
                     <Route path='/search' exact component={SearchPage}/>
                     <Redirect to='/'/>
                 </Switch>
@@ -42,12 +44,11 @@ class Account extends React.Component{
                     <MessageModal style={this.state.showMessage?{display:'flex'}:{display:'none'}} closeClicked={()=>this.setState({showMessage:false,addPostOpen:false})} loading={this.props.loading}>{this.props.postMessage}</MessageModal>:
                     <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} changeState={()=>this.setState({showMessage:true})} postClicked={this.props.onPostClicked} token={this.props.token}/>
                 }
-                <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}}/>
+                <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}} userInfo={this.props.userInfo} saveSettingsClicked={this.props.onSaveSettingsClicked} changeState={()=>this.setState({editProfileOpen:false})} token={this.props.token} userId={this.props.userId}/>
                 <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen || this.state.showMessage?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false,showMessage:false})}></div>
             </div>
         )
     }
-    
 }
 
 const mapStateToProps = state =>{
@@ -55,7 +56,8 @@ const mapStateToProps = state =>{
         token : state.auth.token,
         postMessage: state.post.message,
         loading:state.post.loading,
-        userId:state.auth.userId
+        userId:state.auth.userId,
+        userInfo:state.user.userInfo
     }
 }
 
@@ -64,6 +66,8 @@ const mapDispatchToProps = dispatch =>{
     onLogOut : () => dispatch(actions.logout())
     ,onPostClicked: (postInfo,token) => dispatch(actions.createPost(postInfo,token))
     ,onFetchPosts:(token,userId)=>{dispatch(actions.fetchPosts(token,userId))}
+    ,onFetchUserInfo:(token,userId)=>{dispatch(actions.fetchUserInfo(token,userId))}
+    ,onSaveSettingsClicked:(newInfo,token,userId)=>{dispatch(actions.saveChangedSettingsInfo(newInfo,token,userId))}
 }}
 
 

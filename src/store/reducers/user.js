@@ -5,7 +5,8 @@ const initialState ={
         _id:'',
         userName:'',
         name:'',
-        Bio:'',
+        bio:'',
+        avatarImgUrl:'',
         followers:[],
         followings:[],
         posts:[]
@@ -29,7 +30,7 @@ const reducer = (state=initialState,action) => {
         case actionTypes.UNFOLLOW_FAIL:return{...state, loading:false, error:action.error}
 
         case actionTypes.SAVE_SETTINGS_CHANGES_START:return{...state, loading:true, error:null}
-        case actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS:return{...state, userInfo:action.userInfo, loading:false, error:null}
+        case actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS:return{...state, userInfo:{...state.userInfo,bio:action.newInfo.bio,name:action.newInfo.name,avatarImgUrl:action.newInfo.avatarImgUrl.size !== 0?action.newInfo.avatarImgUrl:state.userInfo.avatarImgUrl}, loading:false, error:null}
         case actionTypes.SAVE_SETTINGS_CHANGES_FAIL:return{...state, loading:false, error:action.error}
         default: return state
     }
