@@ -30,13 +30,9 @@ const reducer = (state=initialState,action) => {
         case actionTypes.DELETE_POST_SUCCESSFUL:return{...state,...state.userInfo.followers.splice(state.userInfo.followers.findIndex(follower => follower.userId === action.followerUserId),1), loading:false, error:null}
         case actionTypes.DELETE_POST_FAILED:return{...state, loading:false, error:action.error}
 
-        case actionTypes.LIKE_POST_START:return{...state, loading:true, error:null}
-        case actionTypes.LIKE_POST_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
-        case actionTypes.LIKE_POST_FAILED:return{...state, loading:false, error:action.error}
-
-        case actionTypes.UNLIKE_POST_START:return{...state, loading:true, error:null}
-        case actionTypes.UNLIKE_POST_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
-        case actionTypes.UNLIKE_POST_FAILED:return{...state, loading:false, error:action.error}
+        case actionTypes.LIKEDISLIKE_POST_START:return{...state, loading:true, error:null}
+        case actionTypes.LIKEDISLIKE_POST_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
+        case actionTypes.LIKEDISLIKE_POST_FAILED:return{...state, loading:false, error:action.error}
 
         case actionTypes.COMMENT_START:return{...state, loading:true, error:null}
         case actionTypes.COMMENT_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
