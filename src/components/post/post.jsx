@@ -4,11 +4,18 @@ import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import photo from '../../images/avatar-preview.jpg'
 // import photo2 from '../../images/example-photo.png'
-import { FaHeart,FaRegComment,FaRegHeart } from "react-icons/fa"
+import { FaHeart,FaRegComment,FaRegHeart,FaEllipsisV } from "react-icons/fa"
+import { Redirect } from 'react-router-dom'
 
 class Post extends React.Component {
 
-    state={liked:false,postId:''}
+    state={
+        liked:false,
+        postId:'',
+        deleteOpen:false
+    }
+
+    
 
     render(){
         let count = 0 
@@ -24,15 +31,21 @@ class Post extends React.Component {
                 count=0
                 clearTimeout(timer)
                 this.props.onPostLikeDislike(this.state.liked?'unlike':'like',this.props.postInfo.postId,this.props.userId,this.props.token)
-                console.log(this.props.postInfo.postId)
                 this.state.liked? this.setState({liked:false}):this.setState({liked:true})
             }
         }
         return (
             <div onClick={onDoubleClick} className='post' style={this.props.style}>
+                {this.props.postInfo.postId?<Redirect to={`/${this.props.userName}`}/>:null}
                 <div className='post-top'>
-                    <div className='post-top-img-box'><img src={this.props.postInfo.creatorAvatarUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creatorAvatarUrl:photo} alt="Jane Smith"/></div>
-                    <h4>{this.props.postInfo.creatorName !== ''?this.props.postInfo.creatorName:this.props.postInfo.creatorUserName}</h4>
+                    <div className='post-top-left'>
+                        <div className='post-top-img-box'><img src={this.props.postInfo.creatorAvatarUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creatorAvatarUrl:photo} alt="Jane Smith"/></div>
+                        <h4>{this.props.postInfo.creatorName !== ''?this.props.postInfo.creatorName:this.props.postInfo.creatorUserName}</h4>
+                    </div>
+                    <div className='post-top-delete-box' style={this.props.postInfo.userId === this.props.userId? {display:'block'}:{display:'none'}}>
+                        <FaEllipsisV onClick={()=>this.setState(this.state.deleteOpen?{deleteOpen:false}:{deleteOpen:true})}/>
+                        <div style={this.state.deleteOpen?{display:'block'}:{display:'none'}} onClick={this.props.deleteHandler} className='post-top-delete'>delete post</div>
+                    </div>
                 </div>
                 <img className='post-photo' src={'http://localhost:8080/'+this.props.postInfo.imageUrl} alt="example"/>
                 <div className='post-likebar'>
@@ -77,7 +90,8 @@ const mapStateToProps = state =>{
         token : state.auth.token,
         postMessage: state.post.message,
         loading:state.post.loading,
-        userId:state.auth.userId
+        userId:state.auth.userId,
+        userName:state.user.userInfo.userName
     }
 }
 

@@ -7,11 +7,16 @@
     margin-bottom: 1rem;
     background-color: white;
     &-top{
-        width: 100%;
         display: flex;
         align-items: center;
-        padding: 1rem 2rem;
+        padding: 1rem 2rem 1rem 0.5rem;
+        justify-content: space-between;
+        &-left{
+            display: flex;
+            align-items: center;
+        }
         h4{padding: 0 1rem;}
+        svg{cursor: pointer;}
         &-img-box{
             cursor: pointer;
             margin:0 1rem;
@@ -20,6 +25,19 @@
             overflow: hidden;
             border-radius: 50%;
             img{width: 100%;}
+        }
+        &-delete-box{position: relative;}
+        &-delete{
+            position: absolute;
+            top: -3.7rem;
+            right: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: white;
+            border: 1px solid gray;
+            border-radius: 3px;
+            width: max-content;
+            padding: .5rem 1rem;
         }
     }
     &-photo{

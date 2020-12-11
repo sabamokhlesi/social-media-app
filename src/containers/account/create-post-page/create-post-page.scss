@@ -13,6 +13,16 @@
     transform: translate(-50%,-50%);
     z-index: 150;
     border-radius: .5rem;
+    &-btn{
+        &:disabled{
+            background-color: gray;
+            cursor: not-allowed;
+            &:hover{
+                border:2px solid gray;
+                color: white;
+            }
+        }
+    }
     &-top{
         display: flex;
         align-items: center;

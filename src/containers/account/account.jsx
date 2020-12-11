@@ -28,9 +28,11 @@ class Account extends React.Component{
         this.props.onFetchPosts(this.props.token,this.props.userId)
         this.props.onFetchUserInfo(this.props.token,this.props.userId)
       }
-      consolelog(id){
-          console.log('working',id)
-      }
+      
+      deleteHandler=()=>{
+        this.setState({showPost:false})
+        this.props.onDeletePost(this.state.singlePostId,this.props.token)
+    }
 
     render(){
         return (
@@ -47,16 +49,17 @@ class Account extends React.Component{
                     <MessageModal style={this.state.showMessage?{display:'flex'}:{display:'none'}} closeClicked={()=>this.setState({showMessage:false,addPostOpen:false})} loading={this.props.loading}>{this.props.postMessage}</MessageModal>:
                     <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} changeState={()=>this.setState({showMessage:true})} postClicked={this.props.onPostClicked} token={this.props.token}/>
                 }
-                {this.state.singlePostId!==''?
+                {this.state.singlePostId!=='' & this.state.showPost?
                 <SinglePost
-                    likeHandler={this.consolelog}
+                    deleteHandler={this.deleteHandler}
                     postInfo={{
                         creatorAvatarUrl:this.props.userInfo.avatarImgUrl,
                         creatorName:this.props.userInfo.name,
                         creatorUserName:this.props.userInfo.username,
                         postId: this.state.singlePostId,
                         imageUrl: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].imageUrl,
-                        caption: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].caption
+                        caption: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].caption,
+                        userId: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].creator
                     }}
                   style={this.state.showPost?{display:'flex',position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'35rem',zIndex:'120'}:{display:'none'}}
                 />:null}
@@ -85,6 +88,7 @@ const mapDispatchToProps = dispatch =>{
     ,onFetchPosts:(token,userId)=>{dispatch(actions.fetchPosts(token,userId))}
     ,onFetchUserInfo:(token,userId)=>{dispatch(actions.fetchUserInfo(token,userId))}
     ,onSaveSettingsClicked:(newInfo,token,userId)=>{dispatch(actions.saveChangedSettingsInfo(newInfo,token,userId))}
+    ,onDeletePost : (postId,token) => dispatch(actions.deletePost(postId,token))
 }}
 
 

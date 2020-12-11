@@ -35,7 +35,7 @@ export const deletePostSuccess =(id) =>{return{type:actionTypes.DELETE_POST_SUCC
 export const deletePost = (postId,token) =>{
     return dispatch => {
         dispatch(deletePostStart())
-        
+        console.log(postId)
         fetch(`http://localhost:8080/account/post/${postId}`, {
         // fetch(`https://buddy-app-backend.herokuapp.com/account/post/${postId}`, {
             method: 'DELETE',headers: {Authorization: 'Bearer ' + token}
@@ -73,14 +73,14 @@ export const fetchPosts = (token,userId) =>{
 
 export const likeDislikePostStart=() =>{return{type:actionTypes.LIKEDISLIKE_POST_START}}
 export const likeDislikePostFailed =(error) =>{return{type:actionTypes.LIKEDISLIKE_POST_FAILED,error:error}}
-export const likeDislikePostSuccess =(id) =>{return{type:actionTypes.LIKEDISLIKE_POST_SUCCESSFUL,postId: id }}
+export const likeDislikePostSuccess =(postId,userId,action) =>{return{type:actionTypes.LIKEDISLIKE_POST_SUCCESSFUL,postId: postId,userId:userId,action:action}}
 
 export const postLikeDislike = (action,postId,userId,token) =>{
     return dispatch => {
         dispatch(likeDislikePostStart())
         
-        fetch(`http://localhost:8080/buddy/post/${postId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/buddy/post/${postId}`, {
+        fetch(`http://localhost:8080/account/post/${postId}?action=${action}&userId=${userId}`, {
+        // fetch(`https://buddy-app-backend.herokuapp.com/account/post/${postId}`, {
             method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {

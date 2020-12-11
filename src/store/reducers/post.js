@@ -27,7 +27,7 @@ const reducer = (state=initialState,action) => {
         case actionTypes.POST_FAILED:return{...state, loading:false, error:action.error,message:'Adding the post failed!'}
 
         case actionTypes.DELETE_POST_START:return{...state, loading:false, error:null}
-        case actionTypes.DELETE_POST_SUCCESSFUL:return{...state,...state.userInfo.followers.splice(state.userInfo.followers.findIndex(follower => follower.userId === action.followerUserId),1), loading:false, error:null}
+        case actionTypes.DELETE_POST_SUCCESSFUL:return{...state,posts:[...state.posts].filter(post => post._id!== action.postId) ,loading:false, error:null}
         case actionTypes.DELETE_POST_FAILED:return{...state, loading:false, error:action.error}
 
         case actionTypes.LIKEDISLIKE_POST_START:return{...state, loading:true, error:null}
