@@ -59,7 +59,8 @@ class Account extends React.Component{
                         postId: this.state.singlePostId,
                         imageUrl: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].imageUrl,
                         caption: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].caption,
-                        userId: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].creator
+                        userId: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].creator,
+                        comments: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].comments
                     }}
                   style={this.state.showPost?{display:'flex',position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'35rem',zIndex:'120'}:{display:'none'}}
                 />:null}

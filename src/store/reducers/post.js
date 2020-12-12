@@ -35,12 +35,15 @@ const reducer = (state=initialState,action) => {
         case actionTypes.LIKEDISLIKE_POST_FAILED:return{...state, loading:false, error:action.error}
 
         case actionTypes.COMMENT_START:return{...state, loading:true, error:null}
-        case actionTypes.COMMENT_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
+        case actionTypes.COMMENT_SUCCESSFUL:
+            const newstate = {...state}
+            const postIndex = newstate.posts.findIndex(post => post._id === action.postId)
+            newstate.posts[postIndex].comments.push(action.commentData)
+            newstate.loading =false
+            newstate.error = null
+            return newstate
         case actionTypes.COMMENT_FAILED:return{...state, loading:false, error:action.error}
 
-        case actionTypes.DELETE_COMMENT_START:return{...state, loading:true, error:null}
-        case actionTypes.DELETE_COMMENT_SUCCESSFUL:return{...state, userInfo:action.userInfo, loading:false, error:null}
-        case actionTypes.DELETE_COMMENT_FAILED:return{...state, loading:false, error:action.error}
         default: return state
     }
 }

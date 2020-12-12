@@ -95,41 +95,28 @@ export const postLikeDislike = (action,postId,userId,token) =>{
 
 export const commentStart=() =>{return{type:actionTypes.COMMENT_START}}
 export const commentFailed =(error) =>{return{type:actionTypes.COMMENT_FAILED,error:error}}
-export const commentSuccess =(id,data) =>{return{type:actionTypes.COMMENT_SUCCESSFUL,commentId:id, commentData:data }}
+export const commentSuccess =(id,data) =>{return{type:actionTypes.COMMENT_SUCCESSFUL,postId:id, commentData:data }}
 
-export const comment = (commentInfo,token) =>{
+export const postComment = (postId,userId,commentData,token) =>{
     return dispatch => {
+        const info = {userId:userId,comment:commentData.comment}
         dispatch(commentStart())
-        fetch('http://localhost:8080/buddy/comment', 
-        // fetch('https://buddy-app-backend.herokuapp.com/buddy/comment', 
-            {method: 'POST',body:JSON.stringify(commentInfo), headers: {Authorization: 'Bearer' + token, 'Content-Type':'application/json'}})
+        fetch(`http://localhost:8080/account/comment/${postId}`, 
+        // fetch(`https://buddy-app-backend.herokuapp.com/account/comment/${postId}`, 
+            {method: 'POST',body:JSON.stringify(info), headers: {Authorization: 'Bearer ' + token, 'Content-Type':'application/json'}})
         .then(res => {
             if (res.status !== 200 && res.status !== 201) {throw new Error('Creating the comment failed!');}
             return res.json();
             })
-        .then(res =>{dispatch(commentSuccess(res.comment._id,commentInfo))})
+        .then(res =>{
+            const commentInfo = {
+                _id:res._id,
+                userId:{userId:userId,userInfo:{avatarImgUrl:commentData.avatarImgUrl,name:commentData.name,userName:commentData.userName}},
+                content:commentData.comment
+            }
+            dispatch(commentSuccess(postId,commentInfo))
+        })
         .catch(err=>{dispatch(commentFailed(err))})
     }
 }
 
-
-export const deleteCommentStart=() =>{return{type:actionTypes.DELETE_COMMENT_START}}
-export const deleteCommentFailed =(error) =>{return{type:actionTypes.DELETE_COMMENT_FAILED,error:error}}
-export const deleteCommentSuccess =(id) =>{return{type:actionTypes.DELETE_COMMENT_SUCCESSFUL,CommentId: id }}
-
-export const deleteComment = (commentId,token) =>{
-    return dispatch => {
-        dispatch(deleteCommentStart())
-        
-        fetch(`http://localhost:8080/buddy/comment/${commentId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/buddy/comment/${commentId}`, {
-            method: 'DELETE',headers: {Authorization: 'Bearer ' + token}
-        })
-        .then(res => {
-        if (res.status !== 200 && res.status !== 201) {throw new Error('Deleting a comment failed!');}
-        return res.json();
-        })
-        .then(res =>{dispatch(deleteCommentSuccess(commentId))})
-        .catch(err=>{dispatch(deleteCommentFailed(err))})
-    }
-}

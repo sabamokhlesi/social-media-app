@@ -3,7 +3,6 @@ import './post.scss'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import photo from '../../images/avatar-preview.jpg'
-// import photo2 from '../../images/example-photo.png'
 import { FaHeart,FaRegComment,FaRegHeart,FaEllipsisV } from "react-icons/fa"
 import { Redirect } from 'react-router-dom'
 
@@ -12,10 +11,21 @@ class Post extends React.Component {
     state={
         liked:false,
         postId:'',
-        deleteOpen:false
+        deleteOpen:false,
+        comment:''
     }
 
-    
+    postCommentHandler= event => {
+        event.preventDefault()
+        const commentData={
+            comment:this.state.comment,
+            avatarImgUrl:this.props.userInfo.avatarImgUrl,
+            name:this.props.userInfo.name,
+            userName:this.props.userInfo.userName
+        }
+        this.props.onPostComment(this.props.postInfo.postId,this.props.userId,commentData,this.props.token)
+        this.form.reset()
+    }
 
     render(){
         let count = 0 
@@ -57,27 +67,22 @@ class Post extends React.Component {
                     <p>{this.props.postInfo.caption}</p>
                 </div>
                 <div className='post-comments'>
-                    <h4>12 Comments</h4>
+                    <h4>{(this.props.postInfo.comments.length).toString()} {+this.props.postInfo.comments.length>1?'comments':'comment'}</h4>
                     <div className='post-comments-main'>
-                        <div className='post-comment'>
-                            <div className='post-comment-title'>
-                                <div className='post-comment-img-box'><img src={photo} alt="Jane Smith"/></div>
-                                <h4>Jane Doe:</h4>
+                        {this.props.postInfo.comments.map(comment=>{return(
+                            <div className='post-comment'>
+                                <div className='post-comment-title'>
+                                    <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt="Jane Smith"/></div>
+                                    <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName}:</h4>
+                                </div>
+                                <p>{comment.content}</p>
                             </div>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum saepe voluptate quaerat provident nemo nostrum animi eligendi, ipsam libero laborum ipsum ducimus? Consequuntur explicabo nesciunt veniam animi ab labore tempora.</p>
-                        </div>
-                        <div className='post-comment'>
-                            <div className='post-comment-title'>
-                                <div className='post-comment-img-box'><img src={photo} alt="Jane Smith"/></div>
-                                <h4>Jane Doe:</h4>
-                            </div>
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                        </div>
+                        )})}
                     </div>
-                    <div className='post-comment-add'>
-                        <input type="text" placeholder='Add a comment'/>
-                        <button className='btn'>post</button>
-                    </div>
+                    <form className='post-comment-add' onSubmit={this.postCommentHandler} ref={form => { this.form = form}}>
+                        <input className='post-comment-add-input' type="text" placeholder='Add a comment' onChange={event=>this.setState({comment:event.target.value})}/>
+                        <input className='btn post-comment-add-btn' type='submit' value="post" disabled={this.state.comment.trim() === ''}/>
+                    </form>
                 </div>
             </div>
         )
@@ -91,13 +96,15 @@ const mapStateToProps = state =>{
         postMessage: state.post.message,
         loading:state.post.loading,
         userId:state.auth.userId,
-        userName:state.user.userInfo.userName
+        userName:state.user.userInfo.userName,
+        userInfo:state.user.userInfo
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
         onPostLikeDislike : (action,postId,userId,token) => dispatch(actions.postLikeDislike(action,postId,userId,token))
+        ,onPostComment : (postId,userId,commentData,token) => dispatch(actions.postComment(postId,userId,commentData,token))
 }}
 
 
