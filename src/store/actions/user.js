@@ -88,3 +88,24 @@ export const unfollow =(unfollowedUser,token,userId)=>{
         .catch(err=>{dispatch(unfollowFail(err))})
     }
 }
+
+export const getUserSuccess = (info) =>{return{type: actionTypes.GET_USER_SUCCESS,user: info }}
+export const getUserFail = (error) => {return{type: actionTypes.GET_USER_FAILED,error: error}}
+export const getUserStart =() => {return{type: actionTypes.GET_USER_START}}
+
+export const getUser = (userName,token) =>{
+    return dispatch => {
+        dispatch(getUserStart())
+        fetch(`http://localhost:8080/users/${userName}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/users/${userName}`, {
+            method: 'GET',headers: {Authorization: 'Bearer ' + token}
+        })
+        .then(res => {
+        if (res.status !== 200 && res.status !== 201) {throw new Error('Fetching the user failed!')}
+        return res.json();
+        })
+        .then(res=>{
+            dispatch(getUserSuccess(res.userInfo))
+        }).catch(err=>dispatch(getUserFail(err)))
+    }
+}

@@ -37,12 +37,45 @@ class Account extends React.Component{
     render(){
         return (
             <div>
-                <NavBar onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
+                <NavBar userName={this.props.userInfo.userName} onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
                     <Route path='/' exact component={Home}/>
-                    <Route path={`/${this.props.userInfo.userName}`} render={() => 
-                        <Profile postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} posts={this.props.posts} userInfo={this.props.userInfo} onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>}/>
-                    <Route path='/search' exact component={SearchPage}/>
+                    <Route path={`/${this.props.userInfo.userName}`} 
+                        render={() => 
+                            <Profile 
+                            loading={false}
+                            userName={this.props.userInfo.userName}
+                            currentUserUserName={this.props.userInfo.userName}
+                            postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
+                            posts={this.props.posts} userInfo={this.props.userInfo} 
+                            onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>
+                        }
+                    />
+                    {/* {this.props.otherUser !== {}?
+                        <Route path={`/${this.props.otherUser.userName}`}  exact 
+                        render={()=><div>{this.props.otherUser.userName}</div>}
+                        // render={() => 
+                        //     <Profile 
+                        //     currentUserUserName={this.props.userInfo.userName}
+                        //     postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
+                        //     posts={this.props.otherUser.posts} 
+                        //     userInfo={this.props.otherUser.userInfo}/>
+                        // }
+                    />:null
+                    } */}
+                    
+                    <Route path='/search' exact render={()=><SearchPage gettingUser={this.props.onGetUser}/>}/>
+                    <Route path='/:userName' 
+                        render={({match}) => 
+                            <Profile 
+                            loading={this.props.userLoading}
+                            userName={match.params.userName}
+                            currentUserUserName={this.props.userInfo.userName}
+                            postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
+                            userInfo={this.props.otherUser}
+                            posts={this.props.otherUser.posts}/>
+                        }
+                    />
                     <Redirect to='/'/>
                 </Switch>
                 {this.state.showMessage?
@@ -78,7 +111,9 @@ const mapStateToProps = state =>{
         loading:state.post.loading,
         userId:state.auth.userId,
         userInfo:state.user.userInfo,
-        posts:state.post.posts
+        posts:state.post.posts,
+        otherUser:state.user.otherUser,
+        userLoading:state.user.loading
     }
 }
 
@@ -90,6 +125,7 @@ const mapDispatchToProps = dispatch =>{
     ,onFetchUserInfo:(token,userId)=>{dispatch(actions.fetchUserInfo(token,userId))}
     ,onSaveSettingsClicked:(newInfo,token,userId)=>{dispatch(actions.saveChangedSettingsInfo(newInfo,token,userId))}
     ,onDeletePost : (postId,token) => dispatch(actions.deletePost(postId,token))
+    ,onGetUser: (userName,token) => dispatch(actions.getUser(userName,token))
 }}
 
 

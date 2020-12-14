@@ -17,7 +17,7 @@ const navbar = (props) => {
                         <NavLink activeClassName='navbar-item-active' exact to='/search' className='btn' onClick={props.onNavItemClicked}><FaSearch size='2.4rem'/></NavLink>
                     </div>
                     <div className='navbar-item'>
-                        <NavLink activeClassName='navbar-item-active' exact to='/saba-mokhlesi' className='btn' onClick={props.onNavItemClicked}><FaRegUserCircle size='2.4rem'/></NavLink>
+                        <NavLink activeClassName='navbar-item-active' exact to={'/'+props.userName} className='btn' onClick={props.onNavItemClicked}><FaRegUserCircle size='2.4rem'/></NavLink>
                     </div>
                     <div className='navbar-item'>
                         <button exact onClick={props.addPostClick} className='btn'><FaPlus size='2.4rem'/></button>

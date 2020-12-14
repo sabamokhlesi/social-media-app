@@ -2,14 +2,21 @@ import React from'react'
 import './search-page.scss'
 import {FaSearch} from "react-icons/fa"
 import photo from '../../../images/photo.jpg'
-const searchPage = (props) => {
+import { useHistory } from "react-router-dom";
+const SearchPage = (props) => {
+    const history = useHistory();
+    const linkHandler = ()=>{
+        props.gettingUser('saba-mokhlesi',props.token)
+        history.push('/saba-mokhlesi')
+         
+        }
     return (
         <div className='search-page'>
             <div className='search-body'>
                 <input type="search" name='search' placeholder='Search accounts'/>
-
                 <div className='search-results'>
                     <p className='search-title'>Your followings:</p>
+                    <button onClick={linkHandler}>Saba's profile</button>
                     <div className='search-result'>
                         <div className='search-result-img-box'><img src={photo} alt="Jane Smith"/></div>
                         <h5>Jane Smith</h5>.
@@ -35,4 +42,4 @@ const searchPage = (props) => {
     )
 }
 
-export default searchPage
+export default SearchPage
