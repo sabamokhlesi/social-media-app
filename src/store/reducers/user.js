@@ -13,7 +13,9 @@ const initialState ={
     },
     loading:false,
     error:null,
-    otherUser:{userName:'saba'}
+    otherUser:{
+        posts:[]
+    }
 }
 
 const reducer = (state=initialState,action) => {
@@ -38,6 +40,14 @@ const reducer = (state=initialState,action) => {
         case actionTypes.GET_USER_SUCCESS:return{...state, otherUser:action.user, loading:false, error:null}
         case actionTypes.GET_USER_FAILED:return{...state, loading:false, error:action.error}
 
+        case actionTypes.COMMENT_OTHER_SUCCESSFUL:
+            const newState ={...state}
+            const postIndex = newState.otherUser.posts.findIndex(post => post._id === action.postId)
+            console.log(postIndex)
+            newState.otherUser.posts[postIndex].comments.push(action.commentData)
+            newState.loading=true
+            newState.error = null
+            return newState
         default: return state
     }
 }

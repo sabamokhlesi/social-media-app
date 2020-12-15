@@ -36,11 +36,9 @@ const reducer = (state=initialState,action) => {
 
         case actionTypes.COMMENT_START:return{...state, loading:true, error:null}
         case actionTypes.COMMENT_SUCCESSFUL:
-            const newstate = {...state}
+            const newstate = {...state,loading:false,error:null}
             const postIndex = newstate.posts.findIndex(post => post._id === action.postId)
             newstate.posts[postIndex].comments.push(action.commentData)
-            newstate.loading =false
-            newstate.error = null
             return newstate
         case actionTypes.COMMENT_FAILED:return{...state, loading:false, error:action.error}
 

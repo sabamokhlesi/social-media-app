@@ -96,10 +96,12 @@ export const postLikeDislike = (action,postId,userId,token) =>{
 export const commentStart=() =>{return{type:actionTypes.COMMENT_START}}
 export const commentFailed =(error) =>{return{type:actionTypes.COMMENT_FAILED,error:error}}
 export const commentSuccess =(id,data) =>{return{type:actionTypes.COMMENT_SUCCESSFUL,postId:id, commentData:data }}
+export const commentOtherSuccess =(id,data) =>{return{type:actionTypes.COMMENT_OTHER_SUCCESSFUL,postId:id, commentData:data }}
 
-export const postComment = (postId,userId,commentData,token) =>{
+export const postComment = (postId,postCreatorId,userId,commentData,token) =>{
     return dispatch => {
         const info = {userId:userId,comment:commentData.comment}
+
         dispatch(commentStart())
         fetch(`http://localhost:8080/account/comment/${postId}`, 
         // fetch(`https://buddy-app-backend.herokuapp.com/account/comment/${postId}`, 
@@ -114,7 +116,9 @@ export const postComment = (postId,userId,commentData,token) =>{
                 userId:{userId:userId,userInfo:{avatarImgUrl:commentData.avatarImgUrl,name:commentData.name,userName:commentData.userName}},
                 content:commentData.comment
             }
-            dispatch(commentSuccess(postId,commentInfo))
+            console.log('postCreatorId:',postCreatorId,'userId:',userId)
+            // dispatch(commentSuccess(postId,commentInfo))
+            postCreatorId === userId?dispatch(commentSuccess(postId,commentInfo)):dispatch(commentOtherSuccess(postId,commentInfo))
         })
         .catch(err=>{dispatch(commentFailed(err))})
     }

@@ -23,7 +23,7 @@ class Post extends React.Component {
             name:this.props.userInfo.name,
             userName:this.props.userInfo.userName
         }
-        this.props.onPostComment(this.props.postInfo.postId,this.props.userId,commentData,this.props.token)
+        this.props.onPostComment(this.props.postInfo._id,this.props.postInfo.creator._id,this.props.userId,commentData,this.props.token)
         this.form.reset()
     }
 
@@ -40,19 +40,18 @@ class Post extends React.Component {
             else if(count === 1){
                 count=0
                 clearTimeout(timer)
-                this.props.onPostLikeDislike(this.state.liked?'unlike':'like',this.props.postInfo.postId,this.props.userId,this.props.token)
+                this.props.onPostLikeDislike(this.state.liked?'unlike':'like',this.props.postInfo._id,this.props.userId,this.props.token)
                 this.state.liked? this.setState({liked:false}):this.setState({liked:true})
             }
         }
         return (
             <div onClick={onDoubleClick} className='post' style={this.props.style}>
-                {this.props.postInfo.postId?<Redirect to={`/${this.props.userName}`}/>:null}
                 <div className='post-top'>
                     <div className='post-top-left'>
-                        <div className='post-top-img-box'><img src={this.props.postInfo.creatorAvatarUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creatorAvatarUrl:photo} alt="Jane Smith"/></div>
-                        <h4>{this.props.postInfo.creatorName !== ''?this.props.postInfo.creatorName:this.props.postInfo.creatorUserName}</h4>
+                        <div className='post-top-img-box'><img src={this.props.postInfo.creator.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creator.userInfo.avatarImgUrl:photo} alt="Jane Smith"/></div>
+                        <h4>{this.props.postInfo.creator.userInfo.name!== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
                     </div>
-                    <div className='post-top-delete-box' style={this.props.postInfo.userId === this.props.userId? {display:'block'}:{display:'none'}}>
+                    <div className='post-top-delete-box' style={this.props.postInfo.creator._id === this.props.userId? {display:'block'}:{display:'none'}}>
                         <FaEllipsisV onClick={()=>this.setState(this.state.deleteOpen?{deleteOpen:false}:{deleteOpen:true})}/>
                         <div style={this.state.deleteOpen?{display:'block'}:{display:'none'}} onClick={this.props.deleteHandler} className='post-top-delete'>delete post</div>
                     </div>
@@ -63,7 +62,7 @@ class Post extends React.Component {
                     <FaRegComment/>
                 </div>
                 <div className='post-caption'>
-                    <h4>{this.props.postInfo.creatorName !== ''?this.props.postInfo.creatorName:this.props.postInfo.creatorUserName}</h4>
+                    <h4>{this.props.postInfo.creator.userInfo.name !== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
                     <p>{this.props.postInfo.caption}</p>
                 </div>
                 <div className='post-comments'>
@@ -72,7 +71,7 @@ class Post extends React.Component {
                         {this.props.postInfo.comments.map(comment=>{return(
                             <div className='post-comment'>
                                 <div className='post-comment-title'>
-                                    <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt="Jane Smith"/></div>
+                                    <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt={comment.userId.userName}/></div>
                                     <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName}:</h4>
                                 </div>
                                 <p>{comment.content}</p>
@@ -93,18 +92,18 @@ class Post extends React.Component {
 const mapStateToProps = state =>{
     return{
         token : state.auth.token,
-        postMessage: state.post.message,
-        loading:state.post.loading,
         userId:state.auth.userId,
         userName:state.user.userInfo.userName,
-        userInfo:state.user.userInfo
+        userInfo:state.user.userInfo,
+        userPosts:state.post.posts,
+        otherUserPosts:state.user.otherUser.posts
     }
 }
 
 const mapDispatchToProps = dispatch =>{
     return{
         onPostLikeDislike : (action,postId,userId,token) => dispatch(actions.postLikeDislike(action,postId,userId,token))
-        ,onPostComment : (postId,userId,commentData,token) => dispatch(actions.postComment(postId,userId,commentData,token))
+        ,onPostComment : (postId,postCreatorId,userId,commentData,token) => dispatch(actions.postComment(postId,postCreatorId,userId,commentData,token))
 }}
 
 

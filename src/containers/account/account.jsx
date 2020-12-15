@@ -18,10 +18,7 @@ class Account extends React.Component{
         showMessage:false,
         showSettingsMessage:false,
         showPost:false,
-        singlePostId:'',
-        user:{
-            userName:'saba-mokhlesi'
-        }
+        singlePostId:''
     }
 
     componentDidMount(){
@@ -43,33 +40,23 @@ class Account extends React.Component{
                     <Route path={`/${this.props.userInfo.userName}`} 
                         render={() => 
                             <Profile 
+                            following
                             loading={false}
                             userName={this.props.userInfo.userName}
                             currentUserUserName={this.props.userInfo.userName}
                             postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
-                            posts={this.props.posts} userInfo={this.props.userInfo} 
+                            posts={this.props.posts} 
+                            userInfo={this.props.userInfo} 
                             onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>
                         }
                     />
-                    {/* {this.props.otherUser !== {}?
-                        <Route path={`/${this.props.otherUser.userName}`}  exact 
-                        render={()=><div>{this.props.otherUser.userName}</div>}
-                        // render={() => 
-                        //     <Profile 
-                        //     currentUserUserName={this.props.userInfo.userName}
-                        //     postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
-                        //     posts={this.props.otherUser.posts} 
-                        //     userInfo={this.props.otherUser.userInfo}/>
-                        // }
-                    />:null
-                    } */}
-                    
                     <Route path='/search' exact render={()=><SearchPage gettingUser={this.props.onGetUser}/>}/>
-                    <Route path='/:userName' 
+                    <Route path='/:userName'
                         render={({match}) => 
                             <Profile 
+                            following
                             loading={this.props.userLoading}
-                            userName={match.params.userName}
+                            userName={this.props.otherUser.userName}
                             currentUserUserName={this.props.userInfo.userName}
                             postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
                             userInfo={this.props.otherUser}
@@ -82,21 +69,16 @@ class Account extends React.Component{
                     <MessageModal style={this.state.showMessage?{display:'flex'}:{display:'none'}} closeClicked={()=>this.setState({showMessage:false,addPostOpen:false})} loading={this.props.loading}>{this.props.postMessage}</MessageModal>:
                     <CreatePostPage style={this.state.addPostOpen?{display:'block'}:{display:'none'}} changeState={()=>this.setState({showMessage:true})} postClicked={this.props.onPostClicked} token={this.props.token}/>
                 }
-                {this.state.singlePostId!=='' & this.state.showPost?
+                {this.state.singlePostId!=='' && this.state.showPost?
                 <SinglePost
                     deleteHandler={this.deleteHandler}
-                    postInfo={{
-                        creatorAvatarUrl:this.props.userInfo.avatarImgUrl,
-                        creatorName:this.props.userInfo.name,
-                        creatorUserName:this.props.userInfo.username,
-                        postId: this.state.singlePostId,
-                        imageUrl: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].imageUrl,
-                        caption: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].caption,
-                        userId: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].creator,
-                        comments: this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)].comments
-                    }}
+                    postInfo={this.props.posts.findIndex(post => post._id === this.state.singlePostId) !== -1?
+                        this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)]
+                        : this.props.otherUserPosts[this.props.otherUserPosts.findIndex(post => post._id === this.state.singlePostId)]
+                }
                   style={this.state.showPost?{display:'flex',position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'35rem',zIndex:'120'}:{display:'none'}}
-                />:null}
+                />
+                :null}
                 <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}} userInfo={this.props.userInfo} saveSettingsClicked={this.props.onSaveSettingsClicked} changeState={()=>this.setState({editProfileOpen:false})} token={this.props.token} userId={this.props.userId}/>
                 <div className="modal-overlay"  style={this.state.addPostOpen || this.state.editProfileOpen || this.state.showMessage || this.state.showPost?{display:"block"}:{display:'none'}} onClick={()=>this.setState({addPostOpen:false,editProfileOpen:false,showMessage:false,showPost:false})}></div>
             </div>
@@ -113,7 +95,8 @@ const mapStateToProps = state =>{
         userInfo:state.user.userInfo,
         posts:state.post.posts,
         otherUser:state.user.otherUser,
-        userLoading:state.user.loading
+        userLoading:state.user.loading,
+        otherUserPosts:state.user.otherUser.posts
     }
 }
 

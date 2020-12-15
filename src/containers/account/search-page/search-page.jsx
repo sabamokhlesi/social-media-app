@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 const SearchPage = (props) => {
     const history = useHistory();
     const linkHandler = ()=>{
-        props.gettingUser('saba-mokhlesi',props.token)
-        history.push('/saba-mokhlesi')
+        props.gettingUser('testUser',props.token)
+        history.push('/testUser')
          
         }
     return (
