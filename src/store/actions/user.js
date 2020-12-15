@@ -47,45 +47,45 @@ export const saveChangedSettingsInfo =(newInfo,token,userId)=>{
 }
 
 
-export const followSuccess = (newFollowing) =>{return{type: actionTypes.FOLLOW_SUCCESS,newFollowing: newFollowing }}
-export const followFail = (error) => {return{type: actionTypes.FOLLOW_FAILED,error: error}}
-export const followStart =() => {return{type: actionTypes.FOLLOW_START}}
+// export const followSuccess = (newFollowing) =>{return{type: actionTypes.FOLLOW_SUCCESS,newFollowing: newFollowing }}
+// export const followFail = (error) => {return{type: actionTypes.FOLLOW_FAILED,error: error}}
+// export const followStart =() => {return{type: actionTypes.FOLLOW_START}}
 
-export const follow =(newFollowing,token,userId)=>{
+// export const follow =(newFollowing,token,userId)=>{
+//     return dispatch => {
+//         dispatch(followStart())
+//         fetch(`http://localhost:8080/social-media/user-followings/${userId}`, {
+//         // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-followings/${userId}`, {
+//             method: 'put',body:JSON.stringify(newFollowing) ,headers: {Authorization: 'Bearer ' + token,'Content-Type': 'application/json'}
+//         })
+//         .then(res => {
+//         if (res.status !== 200 && res.status !== 201) {throw new Error('Following new user failed!');}
+//         return res.json();
+//         })
+//         .then(res =>{dispatch(followSuccess(newFollowing))})
+//         .catch(err=>{dispatch(followFail(err))})
+//     }
+// }
+
+
+
+export const followUnfollowSuccess = (userId,followingUserId,action) =>{return{type: actionTypes.FOLLOW_UNFOLLOW_SUCCESS,userId:userId,followingUserId: followingUserId,action:action }}
+export const followUnfollowFail = (error) => {return{type: actionTypes.FOLLOW_UNFOLLOW_FAIL,error: error}}
+export const followUnfollowStart =() => {return{type: actionTypes.FOLLOW_UNFOLLOW_START}}
+
+export const followUnfollow =(userId,followingUserId,action,token)=>{
     return dispatch => {
-        dispatch(followStart())
-        fetch(`http://localhost:8080/social-media/user-followings/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-followings/${userId}`, {
-            method: 'put',body:JSON.stringify(newFollowing) ,headers: {Authorization: 'Bearer ' + token,'Content-Type': 'application/json'}
+        dispatch(followUnfollowStart())
+        fetch(`http://localhost:8080/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
+        // fetch(`https://buddy-app-backend.herokuapp.com/account/followings/${postId}`, {
+            method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
-        if (res.status !== 200 && res.status !== 201) {throw new Error('Following new user failed!');}
+        if (res.status !== 200 && res.status !== 201) {throw new Error(action+'failed!');}
         return res.json();
         })
-        .then(res =>{dispatch(followSuccess(newFollowing))})
-        .catch(err=>{dispatch(followFail(err))})
-    }
-}
-
-
-
-export const unfollowSuccess = (unfollowedUser) =>{return{type: actionTypes.UNFOLLOW_SUCCESS,unfollowedUser: unfollowedUser }}
-export const unfollowFail = (error) => {return{type: actionTypes.UNFOLLOW_FAIL,error: error}}
-export const unfollowStart =() => {return{type: actionTypes.UNFOLLOW_START}}
-
-export const unfollow =(unfollowedUser,token,userId)=>{
-    return dispatch => {
-        dispatch(unfollowStart())
-        fetch(`http://localhost:8080/social-media/user-followings/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-followings/${userId}`, {
-            method: 'DELETE',body:JSON.stringify(unfollowedUser) ,headers: {Authorization: 'Bearer ' + token,'Content-Type': 'application/json'}
-        })
-        .then(res => {
-        if (res.status !== 200 && res.status !== 201) {throw new Error('Unfollowing failed!');}
-        return res.json();
-        })
-        .then(res =>{dispatch(unfollowSuccess(unfollowedUser))})
-        .catch(err=>{dispatch(unfollowFail(err))})
+        .then(res =>{dispatch(followUnfollowSuccess(userId,followingUserId,action))})
+        .catch(err=>{dispatch(followUnfollowFail(err))})
     }
 }
 

@@ -33,7 +33,7 @@ const profile = (props) => {
                         </div>
                         {props.userInfo.userName !== props.currentUserUserName?
                                 <button onClick={props.followUnfollowClick} >
-                                    {props.following?'Unfollow':'Follow'}
+                                    {props.following}
                                     </button>
                                 :null
                             }

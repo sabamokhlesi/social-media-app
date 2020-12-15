@@ -40,7 +40,8 @@ class Account extends React.Component{
                     <Route path={`/${this.props.userInfo.userName}`} 
                         render={() => 
                             <Profile 
-                            following
+                            following='follow'
+                            followUnfollowClick={null}
                             loading={false}
                             userName={this.props.userInfo.userName}
                             currentUserUserName={this.props.userInfo.userName}
@@ -54,7 +55,8 @@ class Account extends React.Component{
                     <Route path='/:userName'
                         render={({match}) => 
                             <Profile 
-                            following
+                            followUnfollowClick={()=>this.props.onFollowUnfollow(this.props.userId,this.props.otherUser._id,this.props.userInfo.followings.includes(this.props.otherUser._id)?'unfollow':'follow',this.props.token)}
+                            following={this.props.userInfo.followings.includes(this.props.otherUser._id)?'unfollow':'follow'}
                             loading={this.props.userLoading}
                             userName={this.props.otherUser.userName}
                             currentUserUserName={this.props.userInfo.userName}
@@ -109,6 +111,7 @@ const mapDispatchToProps = dispatch =>{
     ,onSaveSettingsClicked:(newInfo,token,userId)=>{dispatch(actions.saveChangedSettingsInfo(newInfo,token,userId))}
     ,onDeletePost : (postId,token) => dispatch(actions.deletePost(postId,token))
     ,onGetUser: (userName,token) => dispatch(actions.getUser(userName,token))
+    ,onFollowUnfollow:(userId,followingUserId,action,token)=>dispatch(actions.followUnfollow(userId,followingUserId,action,token))
 }}
 
 
