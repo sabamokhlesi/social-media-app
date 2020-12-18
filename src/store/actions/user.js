@@ -96,8 +96,8 @@ export const getUserStart =() => {return{type: actionTypes.GET_USER_START}}
 export const getUser = (userName,token) =>{
     return dispatch => {
         dispatch(getUserStart())
-        fetch(`http://localhost:8080/users/${userName}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/users/${userName}`, {
+        fetch(`http://localhost:8080/feed/users/${userName}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/feed/users/${userName}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {

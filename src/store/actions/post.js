@@ -70,6 +70,25 @@ export const fetchPosts = (token,userId) =>{
     }
 }
 
+export const fetchFeedPostsSuccess = (posts) =>{return{type: actionTypes.FETCH_FEED_POSTS_SUCCESS,posts: posts }}
+export const fetchFeedPostsFail = (error) => {return{type: actionTypes.FETCH_FEED_POSTS_FAILED,error: error}}
+export const fetchFeedPostsStart =() => {return{type: actionTypes.FETCH_FEED_POSTS_START}}
+
+export const fetchFeedPosts = (userId,token) =>{
+    return dispatch => {
+        dispatch(fetchFeedPostsStart())
+            
+        fetch(`http://localhost:8080/feed/posts/${userId}`
+        // fetch(`https://buddy-app-backend.herokuapp.com/feed/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
+            ,{method: 'GET',headers: {Authorization: 'Bearer ' + token}})
+            .then(res => {
+                if (res.status !== 200) {throw new Error('Failed to fetch posts.')}
+                return res.json();
+            })
+        .then(res=>{dispatch(fetchFeedPostsSuccess(res.posts))})
+        .catch(err=>dispatch(fetchFeedPostsFail(err)))
+    }
+}
 
 export const likeDislikePostStart=() =>{return{type:actionTypes.LIKEDISLIKE_POST_START}}
 export const likeDislikePostFailed =(error) =>{return{type:actionTypes.LIKEDISLIKE_POST_FAILED,error:error}}
@@ -97,8 +116,9 @@ export const commentStart=() =>{return{type:actionTypes.COMMENT_START}}
 export const commentFailed =(error) =>{return{type:actionTypes.COMMENT_FAILED,error:error}}
 export const commentSuccess =(id,data) =>{return{type:actionTypes.COMMENT_SUCCESSFUL,postId:id, commentData:data }}
 export const commentOtherSuccess =(id,data) =>{return{type:actionTypes.COMMENT_OTHER_SUCCESSFUL,postId:id, commentData:data }}
+export const feedPostCommentSuccess =(id,data) =>{return{type:actionTypes.COMMENT_FEEDPOST_SUCCESSFUL,postId:id, commentData:data }}
 
-export const postComment = (postId,postCreatorId,userId,commentData,token) =>{
+export const postComment = (postId,postCreatorId,userId,commentData,token,feedPost) =>{
     return dispatch => {
         const info = {userId:userId,comment:commentData.comment}
 
@@ -116,9 +136,8 @@ export const postComment = (postId,postCreatorId,userId,commentData,token) =>{
                 userId:{userId:userId,userInfo:{avatarImgUrl:commentData.avatarImgUrl,name:commentData.name,userName:commentData.userName}},
                 content:commentData.comment
             }
-            console.log('postCreatorId:',postCreatorId,'userId:',userId)
-            // dispatch(commentSuccess(postId,commentInfo))
-            postCreatorId === userId?dispatch(commentSuccess(postId,commentInfo)):dispatch(commentOtherSuccess(postId,commentInfo))
+            feedPost?dispatch(feedPostCommentSuccess(postId,commentInfo))
+            :postCreatorId === userId?dispatch(commentSuccess(postId,commentInfo)):dispatch(commentOtherSuccess(postId,commentInfo))
         })
         .catch(err=>{dispatch(commentFailed(err))})
     }

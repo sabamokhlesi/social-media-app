@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import photo from '../../images/avatar-preview.jpg'
 import { FaHeart,FaRegComment,FaRegHeart,FaEllipsisV } from "react-icons/fa"
-import { Redirect } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 class Post extends React.Component {
 
@@ -14,7 +14,9 @@ class Post extends React.Component {
         deleteOpen:false,
         comment:''
     }
-
+    componentDidMount(){
+        this.setState({liked:this.props.postInfo.likes.findIndex(userId=>userId === this.props.userId) !== -1})
+    }
     postCommentHandler= event => {
         event.preventDefault()
         const commentData={
@@ -23,10 +25,14 @@ class Post extends React.Component {
             name:this.props.userInfo.name,
             userName:this.props.userInfo.userName
         }
-        this.props.onPostComment(this.props.postInfo._id,this.props.postInfo.creator._id,this.props.userId,commentData,this.props.token)
+        this.props.onPostComment(this.props.postInfo._id,this.props.postInfo.creator._id,this.props.userId,commentData,this.props.token,this.props.feedPost)
         this.form.reset()
     }
-
+    userProfileHandler = (userName)=>{
+        this.props.onGetUser(userName,this.props.token)
+        this.props.history.push('/'+userName)
+        this.props.profileClicked()
+        }
     render(){
         let count = 0 
         let timer = 0
@@ -47,7 +53,7 @@ class Post extends React.Component {
         return (
             <div onClick={onDoubleClick} className='post' style={this.props.style}>
                 <div className='post-top'>
-                    <div className='post-top-left'>
+                    <div className='post-top-left' onClick={()=>this.userProfileHandler(this.props.postInfo.creator.userInfo.userName)}>
                         <div className='post-top-img-box'><img src={this.props.postInfo.creator.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creator.userInfo.avatarImgUrl:photo} alt="Jane Smith"/></div>
                         <h4>{this.props.postInfo.creator.userInfo.name!== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
                     </div>
@@ -62,7 +68,7 @@ class Post extends React.Component {
                     <FaRegComment/>
                 </div>
                 <div className='post-caption'>
-                    <h4>{this.props.postInfo.creator.userInfo.name !== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
+                    <h4 onClick={()=>this.userProfileHandler(this.props.postInfo.creator.userInfo.userName)}>{this.props.postInfo.creator.userInfo.name !== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
                     <p>{this.props.postInfo.caption}</p>
                 </div>
                 <div className='post-comments'>
@@ -70,7 +76,7 @@ class Post extends React.Component {
                     <div className='post-comments-main'>
                         {this.props.postInfo.comments.map(comment=>{return(
                             <div className='post-comment'>
-                                <div className='post-comment-title'>
+                                <div className='post-comment-title' onClick={()=>this.userProfileHandler(comment.userId.userInfo.userName)}>
                                     <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt={comment.userId.userName}/></div>
                                     <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName}:</h4>
                                 </div>
@@ -103,8 +109,9 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch =>{
     return{
         onPostLikeDislike : (action,postId,userId,token) => dispatch(actions.postLikeDislike(action,postId,userId,token))
-        ,onPostComment : (postId,postCreatorId,userId,commentData,token) => dispatch(actions.postComment(postId,postCreatorId,userId,commentData,token))
+        ,onPostComment : (postId,postCreatorId,userId,commentData,token,feedPost) => dispatch(actions.postComment(postId,postCreatorId,userId,commentData,token,feedPost))
+        ,onGetUser: (userName,token) => dispatch(actions.getUser(userName,token))
 }}
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Post)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Post))

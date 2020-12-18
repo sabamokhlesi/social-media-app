@@ -24,6 +24,7 @@ class Account extends React.Component{
     componentDidMount(){
         this.props.onFetchPosts(this.props.token,this.props.userId)
         this.props.onFetchUserInfo(this.props.token,this.props.userId)
+        this.props.onfetchFeedPosts(this.props.userId,this.props.token)
       }
       
       deleteHandler=()=>{
@@ -36,7 +37,7 @@ class Account extends React.Component{
             <div>
                 <NavBar userName={this.props.userInfo.userName} onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
-                    <Route path='/' exact component={Home}/>
+                    <Route path='/' exact render={()=><Home posts={this.props.feedPosts}/>}/>
                     <Route path={`/${this.props.userInfo.userName}`} 
                         render={() => 
                             <Profile 
@@ -73,6 +74,8 @@ class Account extends React.Component{
                 }
                 {this.state.singlePostId!=='' && this.state.showPost?
                 <SinglePost
+                    feedPost={false}
+                    profileClicked={()=>this.setState({showPost:false})}
                     deleteHandler={this.deleteHandler}
                     postInfo={this.props.posts.findIndex(post => post._id === this.state.singlePostId) !== -1?
                         this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)]
@@ -98,7 +101,8 @@ const mapStateToProps = state =>{
         posts:state.post.posts,
         otherUser:state.user.otherUser,
         userLoading:state.user.loading,
-        otherUserPosts:state.user.otherUser.posts
+        otherUserPosts:state.user.otherUser.posts,
+        feedPosts:state.post.feedPosts
     }
 }
 
@@ -112,6 +116,7 @@ const mapDispatchToProps = dispatch =>{
     ,onDeletePost : (postId,token) => dispatch(actions.deletePost(postId,token))
     ,onGetUser: (userName,token) => dispatch(actions.getUser(userName,token))
     ,onFollowUnfollow:(userId,followingUserId,action,token)=>dispatch(actions.followUnfollow(userId,followingUserId,action,token))
+    ,onfetchFeedPosts: (userId,token)=>dispatch(actions.fetchFeedPosts(userId,token))
 }}
 
 

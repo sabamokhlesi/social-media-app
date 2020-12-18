@@ -12,7 +12,8 @@ const initialState ={
     ],
     loading:false,
     error:null,
-    message:null
+    message:null,
+    feedPosts:[]
 }
 
 
@@ -40,7 +41,16 @@ const reducer = (state=initialState,action) => {
             const postIndex = newstate.posts.findIndex(post => post._id === action.postId)
             newstate.posts[postIndex].comments.push(action.commentData)
             return newstate
+        case actionTypes.COMMENT_FEEDPOST_SUCCESSFUL:
+            const copiedState = {...state,loading:false,error:null}
+            const pIndex = copiedState.feedPosts.findIndex(post => post._id === action.postId)
+            copiedState.feedPosts[pIndex].comments.push(action.commentData)
+            return copiedState
         case actionTypes.COMMENT_FAILED:return{...state, loading:false, error:action.error}
+
+        case actionTypes.FETCH_FEED_POSTS_START:return{...state, loading:true, error:null}
+        case actionTypes.FETCH_FEED_POSTS_SUCCESS:return{...state, feedPosts:action.posts, loading:false, error:null}
+        case actionTypes.FETCH_FEED_POSTS_FAILED:return{...state, loading:false, error:action.error}
 
         default: return state
     }

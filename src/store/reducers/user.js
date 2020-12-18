@@ -49,7 +49,6 @@ const reducer = (state=initialState,action) => {
         case actionTypes.COMMENT_OTHER_SUCCESSFUL:
             const newState ={...state}
             const postIndex = newState.otherUser.posts.findIndex(post => post._id === action.postId)
-            console.log(postIndex)
             newState.otherUser.posts[postIndex].comments.push(action.commentData)
             newState.loading=true
             newState.error = null
