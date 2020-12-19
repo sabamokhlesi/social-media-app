@@ -47,9 +47,9 @@ const reducer = (state=initialState,action) => {
         case actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS:return{...state, userInfo:{...state.userInfo,bio:action.newInfo.bio,name:action.newInfo.name,avatarImgUrl:action.newInfo.avatarImgUrl.size !== 0?action.newInfo.avatarImgUrl:state.userInfo.avatarImgUrl}, loading:false, error:null}
         case actionTypes.SAVE_SETTINGS_CHANGES_FAIL:return{...state, loading:false, error:action.error}
 
-        case actionTypes.GET_USER_START:return{...state, loading:true, error:null}
+        case actionTypes.GET_USER_START:return{...state, loading:true, error:null,otherUser:{posts:[]}}
         case actionTypes.GET_USER_SUCCESS:return{...state, otherUser:action.user, loading:false, error:null}
-        case actionTypes.GET_USER_FAILED:return{...state, loading:false, error:action.error}
+        case actionTypes.GET_USER_FAILED:return{...state, loading:false, error:action.error,otherUser:{posts:[]}}
 
         case actionTypes.COMMENT_OTHER_SUCCESSFUL:
             const newState ={...state}

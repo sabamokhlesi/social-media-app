@@ -7,14 +7,19 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(194, 194, 194, 0.219);
-    img{height: 6rem; width: auto; padding-left: 4rem;}
-    &-btn{margin-right: 4rem;}
+    img{height: 6rem; width: auto; padding-left: 4rem;
+        @media only screen and (max-width:40em) {padding-left: 2rem;height: 5rem;}}
+    &-btn{margin-right: 4rem; 
+        @media only screen and (max-width:40em) {margin-right: 3rem; font-size: 1.4; padding: .7rem 1rem;}
+    }
     &-list{
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-evenly;
+        @media only screen and (max-width:40em) {flex: 1;}
     }
     &-item{
+        .btn{@media only screen and (max-width:40em) {padding:0;}}
         line-height: 0;
         padding: .5rem 1rem;
         a,button{
@@ -22,6 +27,7 @@
             &:visited,
             &:link{
                 color: #00493e;
+                @media only screen and (max-width:40em) {padding:0;}
             }
             &:hover{color:#008d78 ;}
         }
@@ -31,5 +37,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @media only screen and (max-width:40em) {flex: 1;}
     }
 }

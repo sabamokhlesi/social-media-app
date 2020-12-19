@@ -1,13 +1,13 @@
 .search{
     &-body{
-        width: 70rem;
+        max-width: 70rem;
         margin: auto;
         display: flex;
         align-items: center;
         flex-direction: column;
         padding-top: 14rem;
         input{
-            width: 80%;
+            width: 75%;
             border: 1px solid transparent;
             box-shadow: 0 0rem 1.5rem rgba(128, 128, 128, 0.178);
             background-color:white;

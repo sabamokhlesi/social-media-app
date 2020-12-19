@@ -60,10 +60,11 @@
         justify-content:space-between;
         border-top: 1px solid grey;
         border-bottom: 1px solid grey;
+        @media only screen and (max-width:50em) {width: 40rem; font-size: 1.4rem;}
         &-item{
             border-bottom: 3px solid transparent;
             transition: all .2s;
-            padding: 1.5rem;
+            padding: 1.5rem 0;
             text-decoration: none;
             font-size: 1.8rem;
             &:visited,
@@ -79,6 +80,7 @@
     &-body{
         width: 50rem;
         padding-top: 3px;
+        @media only screen and (max-width:50em) {width: 40rem;}
     }
 
     &-posts{
@@ -90,5 +92,6 @@
         height: 25rem;
         background-position: center;
         background-size: cover;
+        @media only screen and (max-width:50em) {height: 20rem;}
     }
 }
