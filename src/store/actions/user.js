@@ -109,3 +109,25 @@ export const getUser = (userName,token) =>{
         }).catch(err=>dispatch(getUserFail(err)))
     }
 }
+
+
+export const searchUsersSuccess = (info) =>{return{type: actionTypes.SEARCH_USERS_SUCCESS,users: info }}
+export const searchUsersFail = (error) => {return{type: actionTypes.SEARCH_USERS_FAILED,error: error}}
+export const searchUsersStart =() => {return{type: actionTypes.SEARCH_USERS_START}}
+
+export const searchUsers = (searchedKey,token) =>{
+    return dispatch => {
+        dispatch(searchUsersStart())
+        fetch(`http://localhost:8080/feed/search-users/${searchedKey}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/feed/search-users/${searchedKey}`, {
+            method: 'GET',headers: {Authorization: 'Bearer ' + token}
+        })
+        .then(res => {
+        if (res.status !== 200 && res.status !== 201) {throw new Error('Searching users failed!')}
+        return res.json();
+        })
+        .then(res=>{
+            dispatch(searchUsersSuccess(res.users))
+        }).catch(err=>dispatch(searchUsersFail(err)))
+    }
+}

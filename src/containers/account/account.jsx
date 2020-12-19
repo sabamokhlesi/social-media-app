@@ -52,7 +52,7 @@ class Account extends React.Component{
                             onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>
                         }
                     />
-                    <Route path='/search' exact render={()=><SearchPage gettingUser={this.props.onGetUser}/>}/>
+                    <Route path='/search' exact render={()=><SearchPage onSearch={this.props.onSearchUsers} token={this.props.token} results={this.props.searchResult} loading={this.props.userLoading} gettingUser={this.props.onGetUser}/>}/>
                     <Route path='/:userName'
                         render={({match}) => 
                             <Profile 
@@ -102,7 +102,8 @@ const mapStateToProps = state =>{
         otherUser:state.user.otherUser,
         userLoading:state.user.loading,
         otherUserPosts:state.user.otherUser.posts,
-        feedPosts:state.post.feedPosts
+        feedPosts:state.post.feedPosts,
+        searchResult:state.user.searchedUsers,
     }
 }
 
@@ -117,6 +118,7 @@ const mapDispatchToProps = dispatch =>{
     ,onGetUser: (userName,token) => dispatch(actions.getUser(userName,token))
     ,onFollowUnfollow:(userId,followingUserId,action,token)=>dispatch(actions.followUnfollow(userId,followingUserId,action,token))
     ,onfetchFeedPosts: (userId,token)=>dispatch(actions.fetchFeedPosts(userId,token))
+    ,onSearchUsers: (searchedKey,token)=>dispatch(actions.searchUsers(searchedKey,token))
 }}
 
 

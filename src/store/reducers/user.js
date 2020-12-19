@@ -15,7 +15,8 @@ const initialState ={
     error:null,
     otherUser:{
         posts:[]
-    }
+    },
+    searchedUsers:[]
 }
 
 const reducer = (state=initialState,action) => {
@@ -23,6 +24,10 @@ const reducer = (state=initialState,action) => {
         case actionTypes.FETCH_USERINFO_START:return{...state, loading:true, error:null}
         case actionTypes.FETCH_USERINFO_SUCCESS:return{...state, userInfo:action.userInfo, loading:false, error:null}
         case actionTypes.FETCH_USERINFO_FAILED:return{...state, loading:false, error:action.error}
+
+        case actionTypes.SEARCH_USERS_START:return{...state, loading:true, error:null, searchedUsers:[]}
+        case actionTypes.SEARCH_USERS_SUCCESS:return{...state, searchedUsers:action.users.filter(user=>user.userInfo.userName!== state.userInfo.userName), loading:false, error:null}
+        case actionTypes.SEARCH_USERS_FAILED:return{...state, loading:false, error:action.error, searchedUsers:[]}
 
         case actionTypes.FOLLOW_UNFOLLOW_START:return{...state, loading:true, error:null}
         case actionTypes.FOLLOW_UNFOLLOW_SUCCESS:

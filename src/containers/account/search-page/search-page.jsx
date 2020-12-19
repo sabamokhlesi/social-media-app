@@ -1,42 +1,40 @@
 import React from'react'
 import './search-page.scss'
-import {FaSearch} from "react-icons/fa"
-import photo from '../../../images/photo.jpg'
+// import {FaSearch} from "react-icons/fa"
+import photo from '../../../images/avatar-preview.jpg'
 import { useHistory } from "react-router-dom";
+import Spinner from '../../../components/spinner/spinner'
 const SearchPage = (props) => {
     const history = useHistory();
-    const linkHandler = ()=>{
-        props.gettingUser('testUser',props.token)
-        history.push('/testUser')
+    const linkHandler = (userName)=>{
+        props.gettingUser(userName,props.token)
+        history.push('/'+userName)
          
         }
+    var timeout = null;
+    const doDelayedSearch=(key)=>{
+        if (timeout) {  
+        clearTimeout(timeout);
+        }
+        timeout = setTimeout(function() {
+            props.onSearch(key,props.token);
+        }, 500);
+    }
     return (
         <div className='search-page'>
             <div className='search-body'>
-                <input type="search" name='search' placeholder='Search accounts'/>
+                <input type="search" name='search' placeholder='Search accounts' onChange={event=>doDelayedSearch(event.target.value)}/>
                 <div className='search-results'>
-                    <p className='search-title'>Your followings:</p>
-                    <button onClick={linkHandler}>Saba's profile</button>
-                    <div className='search-result'>
-                        <div className='search-result-img-box'><img src={photo} alt="Jane Smith"/></div>
-                        <h5>Jane Smith</h5>.
-                        <p>Following</p>
-                    </div>
-                    <div className='search-result'>
-                        <div className='search-result-img-box'><img src={photo} alt="Jane Smith"/></div>
-                        <h5>Jane Smith</h5>.
-                        <p>Following</p>
-                    </div>
-                    <div className='search-result'>
-                        <div className='search-result-img-box'><img src={photo} alt="Jane Smith"/></div>
-                        <h5>Jane Smith</h5>.
-                        <p>Following</p>
-                    </div>
+                    <p className='search-title'>Result:</p>
+                    {!props.loading?
+                    props.results.map(user=>
+                        <div className='search-result' onClick={()=>linkHandler(user.userInfo.userName)}>
+                            <div className='search-result-img-box'><img src={user.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+user.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
+                            <h5>{user.userInfo.name !== ''? user.userInfo.name:user.userInfo.userName}</h5>
+                            <p> (@{user.userInfo.userName})</p>
+                        </div>
+                    ):<Spinner/>}
                 </div>
-                <div className='search-results'>
-                    <p className='search-title'>Other accounts:</p>
-                </div>
-                <button className='btn search-btn'><FaSearch size='1.6rem'/> &nbsp; Show all ...</button>
             </div>
         </div>
     )
