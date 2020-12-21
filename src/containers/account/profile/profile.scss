@@ -2,38 +2,46 @@
     margin: auto;
     display: flex;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
     flex-direction: column;
     padding-top: 14rem;
+    background: rgb(255,128,177);
+    background: linear-gradient(20deg, rgba(255,128,177,1) 0%, rgba(0,6,82,1) 76%);
+    min-height: 84.35vh;
     &-top{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         &-img-box{
-            width: 22rem;
-            height: 22rem;
+            width: 20rem;
+            height: 20rem;
             overflow: hidden;
             border-radius: 50%;
             img{
                 width: 100%;
             }
         }
+        &-box{
+            display: flex;
+            align-items: center;
+        }
         &-items-box{
             display: flex;
             align-items: center;
         }
         &-name{
+            color:  #ffc5db;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 2rem 2rem 3rem 2rem;
-            h2{color: #00493e;padding-top: .5rem;margin-right: 4rem;}
+            h2{color: #00493e;padding-top: .5rem;margin-right: 4rem; color: #fe89b6;}
             button{
                 cursor: pointer;
                 padding: 1rem 1.5rem;
-                border: 1px solid #00493e;
-                background-color: #00493e;
+                border: 1px solid#000652;
+                background-color:#000652;
                 color: white;
                 border-radius: 4px;
                 font-size: 1.6rem;
@@ -49,17 +57,19 @@
                 &:hover{
                     background-color: white;
                     color:#00493e;
+                    color:  #fe89b6;
                 }
             }
         }
         
     }
     &-nav{
-        width: 50rem;
+        color:  #fdb8d3;
+        width: 90rem;
         display: flex;
         justify-content:space-between;
-        border-top: 1px solid grey;
-        border-bottom: 1px solid grey;
+        border-top: 1px solid #000652;
+        border-bottom: 1px solid #000652;
         @media only screen and (max-width:50em) {width: 40rem; font-size: 1.4rem;}
         &-item{
             border-bottom: 3px solid transparent;
@@ -78,20 +88,21 @@
 
     }
     &-body{
-        width: 50rem;
-        padding-top: 3px;
+        width: 100rem;
+        padding-top: 2rem;
         @media only screen and (max-width:50em) {width: 40rem;}
     }
 
     &-posts{
         display: grid;
-        grid-template-columns: auto auto;
-        gap: 3px;
+        grid-template-columns: auto auto auto;
+        gap: 6rem;
     }
     &-post{
-        height: 25rem;
+        height: 27rem;
         background-position: center;
         background-size: cover;
+        border-radius: .5rem;
         @media only screen and (max-width:50em) {height: 20rem;}
     }
 }

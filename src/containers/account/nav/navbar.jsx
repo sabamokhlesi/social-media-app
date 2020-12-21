@@ -1,6 +1,6 @@
 import React from'react'
 import './navbar.scss'
-import logo from '../../../images/logofull.png'
+import logo from '../../../images/logo-pink.png'
 import {NavLink} from 'react-router-dom'
 import { FaHome,FaSearch,FaPlus,FaRegUserCircle} from "react-icons/fa";
 

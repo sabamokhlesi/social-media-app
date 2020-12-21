@@ -2,14 +2,19 @@
     position: fixed;
     width: 100%;
     background-color: white;
+    background: rgba(255, 200, 221, 0.596);
+    background-color: rgba(0,6,82,1);
     height: 8rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(194, 194, 194, 0.219);
-    img{height: 6rem; width: auto; padding-left: 4rem;
+    z-index: 2;
+    img{height: 6rem; width: auto; padding-left: 8rem;
         @media only screen and (max-width:40em) {padding-left: 2rem;height: 5rem;}}
-    &-btn{margin-right: 4rem; 
+    &-btn{margin-right: 8rem;
+        color: rgba(0,6,82,1);
+        background-color: #FE89B6; 
         @media only screen and (max-width:40em) {margin-right: 3rem; font-size: 1.4; padding: .7rem 1rem;}
     }
     &-list{
@@ -19,7 +24,10 @@
         @media only screen and (max-width:40em) {flex: 1;}
     }
     &-item{
-        .btn{@media only screen and (max-width:40em) {padding:0;}}
+        color: #FE89B6;
+        .btn{
+            color: #FE89B6;
+            @media only screen and (max-width:40em) {padding:0;}}
         line-height: 0;
         padding: .5rem 1rem;
         a,button{
@@ -27,11 +35,12 @@
             &:visited,
             &:link{
                 color: #00493e;
+                color: #FE89B6;
                 @media only screen and (max-width:40em) {padding:0;}
             }
-            &:hover{color:#008d78 ;}
+            &:hover{color:#008d78;color: #ffcbdf;}
         }
-        &-active{color: #42fce0;}
+        &-active{color: #42fce0;color: #ffcbdf;}
     }
     &-right{
         display: flex;

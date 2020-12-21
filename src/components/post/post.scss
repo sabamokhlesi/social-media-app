@@ -3,9 +3,16 @@
     display: flex;
     flex-direction: column;
     border: 1px solid rgba(128, 128, 128, 0.26);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    background-color: white;
+    margin-bottom: 5rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 .5rem 3rem rgba(0, 0, 0, 0.473);
+    backdrop-filter: blur(5px);
+    background: rgba(255,255,255,0.2);
+    box-shadow: 10px 10px 20px -10px rgba(255, 255, 255, 0.3);
+    color: white;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-radius: 1.5rem;
     &-top{
         display: flex;
         align-items: center;
@@ -38,6 +45,7 @@
             border-radius: 3px;
             width: max-content;
             padding: .5rem 1rem;
+            color: rgba(0,6,82,1);
         }
     }
     &-photo{
@@ -49,14 +57,16 @@
         padding: 1rem;
         display: flex;
         align-items: center;
-        svg{padding:0 1rem; font-size: 2.4rem; font-weight: lighter; color:#00493e;}
+        
+        svg{padding:0 1rem; font-size: 2.4rem; font-weight: lighter; color:#00493e; color:white;}
     }
     &-caption{
         margin:0 3rem;
         font-size: 1.3rem;
         padding-bottom: 1rem;
-        h4{color:  #00493e; padding: .5rem 0;}
+        h4{color:  #00493e; padding: .5rem 0;color: white;}
         border-bottom: 1px solid rgba(128, 128, 128, 0.26);
+        border-bottom: 1px solid white;
         max-height: 8rem;
         overflow-y: scroll;
         &::-webkit-scrollbar {width: 3px;}
@@ -88,6 +98,7 @@
         padding: .5rem;
         display: flex;
         flex-direction: column;
+        p{padding-left: 1rem;}
         &-title{display: flex; align-items: center;}
         &-img-box{
             cursor: pointer;
@@ -99,16 +110,20 @@
             img{width: 100%;}
         }
         &-add{
+            margin: 0 1rem;
             padding-top: 1rem;
             display: flex;
             align-items: center;
             border-top: 1px solid rgba(128, 128, 128, 0.26);
+            border-top: 1px solid white;
             &-btn{
                 color: #007c6a;
+                color: white;
                 cursor: pointer;
                 &:disabled{
                     cursor: not-allowed;
                     color: rgba(128, 128, 128, 0.596);
+                    color: white;
                 }
             }
             &-input{
@@ -123,6 +138,7 @@
                 font-family: inherit;
                 &::placeholder{
                     color: rgba(128, 128, 128, 0.603);
+                    color: rgba(255, 255, 255, 0.562);
                 }
             }
 

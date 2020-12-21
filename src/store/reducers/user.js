@@ -32,14 +32,14 @@ const reducer = (state=initialState,action) => {
         case actionTypes.FOLLOW_UNFOLLOW_START:return{...state, loading:true, error:null}
         case actionTypes.FOLLOW_UNFOLLOW_SUCCESS:
             const copiedState={...state}
-            copiedState.loading = false
             if(action.action === 'follow'){
-                copiedState.userInfo.followings.push(action.followingUserId)
-                copiedState.otherUser.followers.push(...copiedState.userInfo._id)
+                copiedState.userInfo.followings.unshift({_id:action.followingUserId,userInfo:{userName:copiedState.otherUser.userName,avatarImgUrl:copiedState.otherUser.avatarImgUrl,name:copiedState.otherUser.name}})
+                copiedState.otherUser.followers.unshift({_id:copiedState.userInfo._id,userInfo:{userName:copiedState.userInfo.userName,avatarImgUrl:copiedState.userInfo.avatarImgUrl,name:copiedState.userInfo.name}})
             } else{
-                copiedState.userInfo.followings.splice(copiedState.userInfo.followings.findIndex(followerId => followerId === action.followerUserId),1)
-                copiedState.otherUser.followers.splice(copiedState.otherUser.followers.findIndex(followerId => followerId === action.userId),1)
+                copiedState.userInfo.followings.splice(copiedState.userInfo.followings.findIndex(followerId => followerId._id === action.followerUserId),1)
+                copiedState.otherUser.followers.splice(copiedState.otherUser.followers.findIndex(followerId => followerId._id === action.userId),1)
             }
+            copiedState.loading = false
             return copiedState
         case actionTypes.FOLLOW_UNFOLLOW_FAIL:return{...state, loading:false, error:action.error}
 

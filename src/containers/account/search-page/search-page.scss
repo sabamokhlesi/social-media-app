@@ -1,4 +1,10 @@
 .search{
+    &-page{
+        background: rgb(255,128,177);
+        background: linear-gradient(43deg, rgba(255,128,177,1) 0%, rgba(0,6,82,1) 100%);
+        background: linear-gradient(20deg, rgba(255,128,177,1) 0%, rgba(0,6,82,1) 76%);
+        min-height: 100vh;
+    }
     &-body{
         max-width: 70rem;
         margin: auto;
@@ -9,8 +15,8 @@
         input{
             width: 75%;
             border: 1px solid transparent;
-            box-shadow: 0 0rem 1.5rem rgba(128, 128, 128, 0.178);
-            background-color:white;
+            box-shadow: 0 0rem 3.5rem rgba(0, 0, 0, 0.534);
+            background-color:#ffd9e8;
             border-radius: 100rem;
             color: inherit;
             font-size: inherit;
@@ -34,7 +40,8 @@
     }
     &-results{
         align-self: flex-start;
-        padding: 2rem 3rem;
+        padding:3rem;
+        margin-left: 3rem;
     }
     &-result{
         width: 100%;
@@ -42,11 +49,15 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        p{font-size: 1.5rem; color: rgba(128, 128, 128, 0.836);}
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        p{font-size: 1.5rem; color: rgba(128, 128, 128, 0.836); color:rgba(255, 206, 225, 0.726) ;}
         &-img-box{
             margin: 1rem;
             width: 8rem;
             height: 8rem;
+            width: 6rem;
+            height: 6rem;
             overflow: hidden;
             border-radius: 50%;
             img{
@@ -55,13 +66,14 @@
         }
         h5{
             color: #00493e;
+            color: rgb(255, 206, 225);
+            color: white;
             padding: .5rem;
         }
     }
-    &-page{}
     &-title{
         color: #00493e;
-
+        color: rgb(255, 206, 225) ;
         font-size: 1.8rem;
 
     }

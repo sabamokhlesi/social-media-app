@@ -78,9 +78,10 @@ class Post extends React.Component {
                             <div className='post-comment'>
                                 <div className='post-comment-title' onClick={()=>this.userProfileHandler(comment.userId.userInfo.userName)}>
                                     <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt={comment.userId.userName}/></div>
-                                    <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName}:</h4>
+                                    <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName} </h4>
+                                    <p> {comment.content}</p>
                                 </div>
-                                <p>{comment.content}</p>
+                                
                             </div>
                         )})}
                     </div>

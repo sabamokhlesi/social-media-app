@@ -18,7 +18,8 @@ class Account extends React.Component{
         showMessage:false,
         showSettingsMessage:false,
         showPost:false,
-        singlePostId:''
+        singlePostId:'',
+        followingOtherUser:false
     }
 
     componentDidMount(){
@@ -37,7 +38,7 @@ class Account extends React.Component{
             <div>
                 <NavBar userName={this.props.userInfo.userName} onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
                 <Switch>
-                    <Route path='/' exact render={()=><Home posts={this.props.feedPosts}/>}/>
+                    <Route path='/' exact render={()=><Home posts={this.props.feedPosts} userInfo={this.props.userInfo}/>}/>
                     <Route path={`/${this.props.userInfo.userName}`} 
                         render={() => 
                             <Profile 
@@ -49,21 +50,26 @@ class Account extends React.Component{
                             postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
                             posts={this.props.posts} 
                             userInfo={this.props.userInfo} 
-                            onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}/>
+                            onEditProfileClick={()=>this.setState({addPostOpen:false,editProfileOpen:true})}
+                            gettingUser={this.props.onGetUser}
+                            token={this.props.token}/>
                         }
                     />
                     <Route path='/search' exact render={()=><SearchPage onSearch={this.props.onSearchUsers} token={this.props.token} results={this.props.searchResult} loading={this.props.userLoading} gettingUser={this.props.onGetUser}/>}/>
                     <Route path='/:userName'
                         render={({match}) => 
                             <Profile 
-                            followUnfollowClick={()=>this.props.onFollowUnfollow(this.props.userId,this.props.otherUser._id,this.props.userInfo.followings.includes(this.props.otherUser._id)?'unfollow':'follow',this.props.token)}
-                            following={this.props.userInfo.followings.includes(this.props.otherUser._id)?'unfollow':'follow'}
+                            followUnfollowClick={()=>this.props.onFollowUnfollow(this.props.userId,this.props.otherUser._id,this.props.userInfo.followings.findIndex(following=>following._id === this.props.otherUser._id) !== -1?'unfollow':'follow',this.props.token)}
+                            following={this.props.userInfo.followings.findIndex(following=>following._id === this.props.otherUser._id) !== -1?'unfollow':'follow'}
                             loading={this.props.userLoading}
                             userName={this.props.otherUser.userName}
                             currentUserUserName={this.props.userInfo.userName}
                             postShow={(event)=>this.setState({singlePostId:event.target.id,showPost:true})} 
                             userInfo={this.props.otherUser}
-                            posts={this.props.otherUser.posts}/>
+                            posts={this.props.otherUser.posts}
+                            gettingUser={this.props.onGetUser}
+                            token={this.props.token}
+                            />
                         }
                     />
                     <Redirect to='/'/>
@@ -103,7 +109,7 @@ const mapStateToProps = state =>{
         userLoading:state.user.loading,
         otherUserPosts:state.user.otherUser.posts,
         feedPosts:state.post.feedPosts,
-        searchResult:state.user.searchedUsers,
+        searchResult:state.user.searchedUsers
     }
 }
 
