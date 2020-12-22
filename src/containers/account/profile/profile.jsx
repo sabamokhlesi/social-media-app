@@ -19,7 +19,7 @@ const Profile = (props) => {
     const posts = 
     props.posts?
     <div className='profile-posts'>
-        {props.posts.map(post=><div className='profile-post' style={{backgroundImage:serverUrl+post.imageUrl+')'}} onClick={props.postShow} key={post._id} id={post._id}>
+        {props.posts.map(post=><div className='profile-post' style={{backgroundImage:'url('+serverUrl+post.imageUrl+')'}} onClick={props.postShow} key={post._id} id={post._id}>
         </div>)}
     </div>:<div style={{textAlign:'center',padding:'1rem'}}>No post found</div>
 
