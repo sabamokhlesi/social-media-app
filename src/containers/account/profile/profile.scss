@@ -2,7 +2,6 @@
     margin: auto;
     display: flex;
     align-items: center;
-    // justify-content: center;
     flex-direction: column;
     padding-top: 14rem;
     background: rgb(255,128,177);
@@ -70,7 +69,8 @@
         justify-content:space-between;
         border-top: 1px solid #000652;
         border-bottom: 1px solid #000652;
-        @media only screen and (max-width:50em) {width: 40rem; font-size: 1.4rem;}
+        @media only screen and (max-width:56em) {width: 70rem; font-size: 1.5rem;}
+        @media only screen and (max-width:38em) {width: 40rem; font-size: 1.4rem;}
         &-item{
             border-bottom: 3px solid transparent;
             transition: all .2s;
@@ -90,19 +90,27 @@
     &-body{
         width: 100rem;
         padding-top: 2rem;
-        @media only screen and (max-width:50em) {width: 40rem;}
+        @media only screen and (max-width:56em) {width: 70rem;}
+        @media only screen and (max-width:38em) {width: 40rem;}
     }
 
     &-posts{
         display: grid;
         grid-template-columns: auto auto auto;
         gap: 6rem;
+        @media only screen and (max-width:56em) {gap: 3rem;}
+        @media only screen and (max-width:38em) {gap: 2rem; grid-template-columns: auto auto;}
     }
     &-post{
+        cursor: pointer;
         height: 27rem;
         background-position: center;
         background-size: cover;
-        border-radius: .5rem;
-        @media only screen and (max-width:50em) {height: 20rem;}
+        border-radius:.5rem;
+        transition: all .3s;
+        &:hover{transform: scale(1.03);}
+        @media only screen and (max-width:56em) {height: 20rem;}
+        @media only screen and (max-width:38em) {height: 18rem;}
     }
+    &-followers,&-followings{padding-left: 8%; @media only screen and (max-width:56em) {padding-left: 5%;}}
 }

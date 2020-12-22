@@ -2,12 +2,15 @@ import React from'react'
 import './navbar.scss'
 import logo from '../../../images/logo-pink.png'
 import {NavLink} from 'react-router-dom'
-import { FaHome,FaSearch,FaPlus,FaRegUserCircle} from "react-icons/fa";
+import { FaHome,FaSearch,FaPlus,FaRegUserCircle} from "react-icons/fa"
+import { useHistory } from "react-router-dom"
 
-const navbar = (props) => {
+const Navbar = (props) => {
+    const history = useHistory()
+        
     return (
         <div className='navbar'>
-            <img src={logo} alt="Buddy logo"/>
+            <img src={logo} alt="Buddy logo" onClick={()=>history.push('/')}/>
             <div className='navbar-right'>
                 <div className='navbar-list'>
                     <div className='navbar-item'>
@@ -29,4 +32,4 @@ const navbar = (props) => {
     )
 }
 
-export default navbar
+export default Navbar

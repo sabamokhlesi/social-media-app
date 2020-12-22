@@ -26,6 +26,7 @@ class Account extends React.Component{
         this.props.onFetchPosts(this.props.token,this.props.userId)
         this.props.onFetchUserInfo(this.props.token,this.props.userId)
         this.props.onfetchFeedPosts(this.props.userId,this.props.token)
+        this.props.onfetchSuggestedUsers(this.props.token,this.props.userId)
       }
       
       deleteHandler=()=>{
@@ -36,9 +37,21 @@ class Account extends React.Component{
     render(){
         return (
             <div>
-                <NavBar userName={this.props.userInfo.userName} onLogOutClick={this.props.onLogOut} addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}/>
+                <NavBar 
+                    userName={this.props.userInfo.userName} 
+                    onLogOutClick={this.props.onLogOut} 
+                    addPostClick={()=>this.setState({addPostOpen:true,editProfileOpen:false})}
+                />
                 <Switch>
-                    <Route path='/' exact render={()=><Home posts={this.props.feedPosts} userInfo={this.props.userInfo}/>}/>
+                    <Route path='/' exact 
+                        render={()=><Home 
+                            posts={this.props.feedPosts} 
+                            suggestedUsers={this.props.suggestedUsers}
+                            userInfo={this.props.userInfo} 
+                            gettingUser={this.props.onGetUser} 
+                            token={this.props.token}
+                            />}
+                    />
                     <Route path={`/${this.props.userInfo.userName}`} 
                         render={() => 
                             <Profile 
@@ -87,7 +100,7 @@ class Account extends React.Component{
                         this.props.posts[this.props.posts.findIndex(post => post._id === this.state.singlePostId)]
                         : this.props.otherUserPosts[this.props.otherUserPosts.findIndex(post => post._id === this.state.singlePostId)]
                 }
-                  style={this.state.showPost?{display:'flex',position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'35rem',zIndex:'120'}:{display:'none'}}
+                  style={this.state.showPost?{display:'flex',position:'fixed',top:'50%',left:'50%',transform:'translate(-50%,-50%)',width:'42rem',zIndex:'120'}:{display:'none'}}
                 />
                 :null}
                 <EditProfile style={this.state.editProfileOpen?{display:'block'}:{display:'none'}} userInfo={this.props.userInfo} saveSettingsClicked={this.props.onSaveSettingsClicked} changeState={()=>this.setState({editProfileOpen:false})} token={this.props.token} userId={this.props.userId}/>
@@ -109,7 +122,8 @@ const mapStateToProps = state =>{
         userLoading:state.user.loading,
         otherUserPosts:state.user.otherUser.posts,
         feedPosts:state.post.feedPosts,
-        searchResult:state.user.searchedUsers
+        searchResult:state.user.searchedUsers,
+        suggestedUsers:state.user.suggestedUsers
     }
 }
 
@@ -125,6 +139,7 @@ const mapDispatchToProps = dispatch =>{
     ,onFollowUnfollow:(userId,followingUserId,action,token)=>dispatch(actions.followUnfollow(userId,followingUserId,action,token))
     ,onfetchFeedPosts: (userId,token)=>dispatch(actions.fetchFeedPosts(userId,token))
     ,onSearchUsers: (searchedKey,token)=>dispatch(actions.searchUsers(searchedKey,token))
+    ,onfetchSuggestedUsers:(token,userId)=>dispatch(actions.fetchSuggestedUsers(token,userId))
 }}
 
 

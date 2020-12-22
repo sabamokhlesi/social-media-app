@@ -1,10 +1,11 @@
 import React from 'react'
 import './sign-up-page.scss'
 import {Link} from 'react-router-dom'
-import SignUpImg from '../../images/4.png'
+// import SignUpImg from '../../images/4.png'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/spinner/spinner'
+
 class SignUpPage extends React.Component{
     state = {
         signUpMessage : null,
@@ -40,7 +41,6 @@ class SignUpPage extends React.Component{
         let form = 
             <form className='sign-up'>
                 <div className='sign-up-form'>
-                        <p>--Welcome--</p>
                         <div className="sign-up-form-title h3">Join Us Now!</div>
                         <p className='sign-up-message'>{this.state.signUpMessage}</p>
                         <p className='sign-up-message'>{errorMessage}</p>
@@ -56,9 +56,6 @@ class SignUpPage extends React.Component{
                         <div className="sign-up-to-sign-in">
                             <h4>Already have an account? <Link to="/sign-in" className='sign-up-to-sign-in-link'> Sign In</Link></h4>
                         </div>
-                </div>
-                <div className='sign-up-img'>
-                    <img src={SignUpImg} alt="sign up here"/>
                 </div>
             </form>
         if (this.props.loading){form = <Spinner/>}

@@ -132,3 +132,24 @@ export const searchUsers = (searchedKey,token) =>{
         }).catch(err=>dispatch(searchUsersFail(err)))
     }
 }
+
+export const fetchSuggestedUsersSuccess = (info) =>{return{type: actionTypes.FETCH_SUGGESTED_USERS_SUCCESS,users: info }}
+export const fetchSuggestedUsersFail = (error) => {return{type: actionTypes.FETCH_SUGGESTED_USERS_FAILED,error: error}}
+export const fetchSuggestedUsersStart =() => {return{type: actionTypes.FETCH_SUGGESTED_USERS_START}}
+
+export const fetchSuggestedUsers = (token,userId) =>{
+    return dispatch => {
+        dispatch(fetchSuggestedUsersStart())
+        fetch(`http://localhost:8080/feed/get-users/${userId}`, {
+        // fetch(`https://social-media-app-backend.herokuapp.com/feed/get-users/${userId}`, {
+            method: 'GET',headers: {Authorization: 'Bearer ' + token}
+        })
+        .then(res => {
+        if (res.status !== 200 && res.status !== 201) {throw new Error('geting users failed!')}
+        return res.json();
+        })
+        .then(res=>{
+            dispatch(fetchSuggestedUsersSuccess(res.users))
+        }).catch(err=>dispatch(fetchSuggestedUsersFail(err)))
+    }
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import './sign-in-page.scss'
 import {Link} from 'react-router-dom'
-import SignInImg from '../../images/6.png'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/spinner/spinner'
@@ -31,12 +30,8 @@ class SignInPage extends React.Component{
 
             let form = 
                 <div className='sign-in'>
-                    <div className='sign-in-img'>
-                        <img src={SignInImg} alt="sign in here"/>
-                    </div>
                     <form className='sign-in-form'>
-                        <p>--Welcome Back--</p>
-                        <div className="sign-in-form-title h3">Connect With Your Buddies!</div>
+                        <div className="sign-in-form-title h3">Sign in now!</div>
                         <p className='sign-in-message'>{this.state.signInMessage}</p>
                         <p className='sign-in-message'>{errorMassage}</p>
                         <div className="sign-in-form-fields">

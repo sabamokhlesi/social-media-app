@@ -10,7 +10,7 @@
     justify-content: space-between;
     border-bottom: 1px solid rgba(194, 194, 194, 0.219);
     z-index: 2;
-    img{height: 6rem; width: auto; padding-left: 8rem;
+    img{height: 6rem; width: auto; padding-left: 8rem; cursor: pointer;
         @media only screen and (max-width:40em) {padding-left: 2rem;height: 5rem;}}
     &-btn{margin-right: 8rem;
         color: rgba(0,6,82,1);

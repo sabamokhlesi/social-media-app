@@ -8,16 +8,13 @@
     background: rgb(255,128,177);
     background: linear-gradient(20deg, rgba(255,128,177,1) 0%, rgba(0,6,82,1) 100%);
     background: linear-gradient(20deg, rgba(255,128,177,1) 0%, rgba(0,6,82,1) 76%);
-    // background-image: url(../../../images/home-background2.jpg);
-    // background-position: center;
-    // background-size: cover;
     background-attachment: fixed;
     &::-webkit-scrollbar {width: 3px;}
     &::-webkit-scrollbar-track { background: transparent;border-radius: 1rem;}
     &::-webkit-scrollbar-thumb {background: transparent; border-radius: 1rem;}
     &-right{
         padding-top: 8rem;
-        
+        @media only screen and (max-width:58em) {display: none;}
         &-top{
             padding-bottom: 2rem;
         }
@@ -25,8 +22,9 @@
 }
 .posts{
     width: 60rem;
-    margin-right: 10rem;
-    // height: 100%;
+    margin-right: 7%;
+    @media only screen and (max-width:58em) {margin-right: unset;}
+    @media only screen and (max-width:33em) {width: 85%;}
     overflow: scroll;
     &::-webkit-scrollbar {width: 0px;}
     &::-webkit-scrollbar-track { background: transparent;border-radius: 1rem;}

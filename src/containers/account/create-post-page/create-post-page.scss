@@ -13,6 +13,13 @@
     transform: translate(-50%,-50%);
     z-index: 150;
     border-radius: .5rem;
+    backdrop-filter: blur(5px);
+    background: rgba(255,255,255,0.25);
+    box-shadow: 10px 10px 20px -10px rgba(255, 255, 255, 0.3);
+    color: white;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-radius: 1.5rem;
     @media only screen and (max-width:50em) {width: 35rem;}
     &-btn{
         &:disabled{
@@ -50,7 +57,10 @@
             transition: all .2s;
             font: inherit;
             &:focus{
-                border: 1px solid #007c6a; 
+                border: 1px solid rgba(255,128,177,1) ; 
+            }
+            &::-webkit-input-placeholder{
+                color: rgba(255, 255, 255, 0.575);
             }
         }
     }
@@ -74,7 +84,7 @@
     top: 0;
     left: 0;
     z-index: 10;
-    label{ background-color: #00493e; color: white;}
+    label{ background-color: rgba(0,6,82,1); color: white;}
     input{
         width: 0.1px;
         height: 0.1px;
@@ -86,7 +96,7 @@
 
 .modal-overlay {
     z-index: 99;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
     top: 0;
     left: 0;

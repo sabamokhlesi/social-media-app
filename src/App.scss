@@ -2,7 +2,7 @@
 // COLOR VARIABLES
 $color-primary:#00D7B5;
 $color-primary-light: #f0fffd;
-$color-primary-dark:#00493e;
+$color-primary-dark:rgba(0,6,82,1);
 
 $color-secondary: #F277A4;
 $color-secondary-light: #fccdde;
@@ -60,6 +60,9 @@ body{
     letter-spacing: 1px;
     line-height: 1.6;
     overflow-x: hidden;
+    &::-webkit-scrollbar {width: 0px;}
+    &::-webkit-scrollbar-track { background: transparent;border-radius: 1rem;}
+    &::-webkit-scrollbar-thumb {background: transparent; border-radius: 1rem;}
 }
 
 .btn{
@@ -114,8 +117,8 @@ body{
         color: white;
         font-weight: bolder;
         &:hover{
-            color: $color-primary-dark;
-            background-color:white ;
+            background-color:$color-secondary ;
+            border: 1px solid $color-secondary;
         }
     }
     &-secondary{

@@ -71,7 +71,7 @@ const Profile = (props) => {
                             }
                     </div>
                     <div className='profile-nav'>
-                        <NavLink activeClassName='profile-nav-item-active' to={`/${props.userInfo.userName}`} exact className='profile-nav-item' >{props.userInfo.posts.length} posts</NavLink>
+                        <NavLink activeClassName='profile-nav-item-active' to={`/${props.userInfo.userName}`} exact className='profile-nav-item' >{props.posts.length} {props.posts.length>0?'posts':'post'}</NavLink>
                         <NavLink activeClassName='profile-nav-item-active' to={`/${props.userInfo.userName}/followers`} exact className='profile-nav-item' >{props.userInfo.followers.length} followers</NavLink>
                         <NavLink activeClassName='profile-nav-item-active' to={`/${props.userInfo.userName}/followings`} exact className='profile-nav-item' >{props.userInfo.followings.length} followings</NavLink>
                     </div>

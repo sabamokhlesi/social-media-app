@@ -16,7 +16,8 @@ const initialState ={
     otherUser:{
         posts:[]
     },
-    searchedUsers:[]
+    searchedUsers:[],
+    suggestedUsers:[]
 }
 
 const reducer = (state=initialState,action) => {
@@ -36,7 +37,9 @@ const reducer = (state=initialState,action) => {
                 copiedState.userInfo.followings.unshift({_id:action.followingUserId,userInfo:{userName:copiedState.otherUser.userName,avatarImgUrl:copiedState.otherUser.avatarImgUrl,name:copiedState.otherUser.name}})
                 copiedState.otherUser.followers.unshift({_id:copiedState.userInfo._id,userInfo:{userName:copiedState.userInfo.userName,avatarImgUrl:copiedState.userInfo.avatarImgUrl,name:copiedState.userInfo.name}})
             } else{
-                copiedState.userInfo.followings.splice(copiedState.userInfo.followings.findIndex(followerId => followerId._id === action.followerUserId),1)
+                copiedState.userInfo.followings.splice(copiedState.userInfo.followings.findIndex(followerId => followerId._id === action.followingUserId),1)
+                // copiedState.userInfo.followings.filter(following => following._id !== action.followingUserId)
+                // copiedState.otherUser.followers.filter(follower => follower._id !== action.userId)
                 copiedState.otherUser.followers.splice(copiedState.otherUser.followers.findIndex(followerId => followerId._id === action.userId),1)
             }
             copiedState.loading = false
@@ -50,6 +53,10 @@ const reducer = (state=initialState,action) => {
         case actionTypes.GET_USER_START:return{...state, loading:true, error:null,otherUser:{posts:[]}}
         case actionTypes.GET_USER_SUCCESS:return{...state, otherUser:action.user, loading:false, error:null}
         case actionTypes.GET_USER_FAILED:return{...state, loading:false, error:action.error,otherUser:{posts:[]}}
+
+        case actionTypes.FETCH_SUGGESTED_USERS_START:return{...state, loading:true, error:null,suggestedUsers:[]}
+        case actionTypes.FETCH_SUGGESTED_USERS_SUCCESS:return{...state, suggestedUsers:action.users, loading:false, error:null}
+        case actionTypes.FETCH_SUGGESTED_USERS_FAILED:return{...state, loading:false, error:action.error,suggestedUsers:[]}
 
         case actionTypes.COMMENT_OTHER_SUCCESSFUL:
             const newState ={...state}

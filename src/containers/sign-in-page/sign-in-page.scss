@@ -1,15 +1,15 @@
 .sign-in-page{
-    min-height: 80vh;
-    margin: auto;
-    margin-top: 0;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 0 10%;
+    background-image: url('../../images/bg4.jpg');
+    background-position: center;
+    background-size: cover;
     h1{
         text-align: center;
-        color: rgb(60, 59, 117);
+        color: #b5d2ff;
         font-weight: bolder;
     }
 }
@@ -35,17 +35,24 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-radius: 2rem;
         padding: 2.5rem;
         max-width:30rem;
         background: rgba(255, 255, 255, 0.514);
+        backdrop-filter: blur(2px);
+        background: rgba(255,255,255,0.2);
+        box-shadow: 10px 10px 20px -10px rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.884);
+        border-right: 1px solid rgba(255,255,255,0.2);
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        border-radius: 1.5rem;
+
         a{
-            color: #324a6d;
+            color: #b5d2ff;
         }
         
         &-title{
             text-align: center;
-            color: #324a6d;
+            color: #FF8BB2;
             padding: 1.5rem;
             padding-top: .5rem;
         }
@@ -58,17 +65,17 @@
                 border: 2px solid transparent;
                 outline:none;
                 background: none;
-                background-color: rgb(227, 240, 255);
-                color: rgb(124, 124, 124);
+                background-color: #e3f0ff4f;
+                color: rgb(224, 224, 224);
                 padding:1rem 3rem;
                 font-size: inherit;
                 border-radius: .5rem;
                 transition: all .2s;
                 &:focus{
-                    border: 2px solid rgb(104, 182, 255);
+                    border: 2px solid rgb(192, 224, 255);
                 }
                 &::placeholder{
-                    color: rgb(165, 165, 165);
+                    color: rgb(216, 216, 216);
                 }
               }
         
@@ -79,13 +86,6 @@
             
         }
         
-    }
-    &-img{
-        width: 55%;
-        @media only screen and (max-width:50em) {width: 70%;}
-        img{
-          width: 100%;  
-        }
     }
 }
 

@@ -2,7 +2,7 @@ import React from'react'
 import './search-page.scss'
 // import {FaSearch} from "react-icons/fa"
 import photo from '../../../images/avatar-preview.jpg'
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom"
 import Spinner from '../../../components/spinner/spinner'
 const SearchPage = (props) => {
     const history = useHistory();
