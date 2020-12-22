@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/spinner/spinner'
+import { withRouter } from "react-router-dom"
+
 class SignInPage extends React.Component{
     state = {
         signInMessage : null
@@ -16,6 +18,7 @@ class SignInPage extends React.Component{
         if (this.signInPass.value.trim().length < 6) {message = 'password is too short'}
         if(message === null){
             this.props.onSignIn(this.signInEmail.value,this.signInPass.value);  
+            this.props.history.push('/')
             this.signInEmail.value='';
             this.signInPass.value=''
         } 
@@ -73,4 +76,4 @@ const mapDispatchToProps = dispatch =>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(SignInPage)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(SignInPage))

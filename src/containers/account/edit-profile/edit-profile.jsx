@@ -4,6 +4,9 @@ import photo from '../../../images/avatar-preview.jpg'
 import {FaPencilAlt} from "react-icons/fa"
 
 const editProfile = (props) => {
+    const serverUrl = 'https://socialmedia-backend.herokuapp.com/'
+    // const serverUrl = 'http://localhost:8080/'
+
     const previewImgEdit = document.getElementById('previewImgEdit');
     
     const imgPreview = function(event) {
@@ -33,7 +36,7 @@ const editProfile = (props) => {
                             <input type="file" name='image' accept="image/*" onChange={event=> imgPreview(event)} id='uploadimgEdit'/>
                         </div>
                         <div className='edit-profile-img-box'>
-                            <img id="previewImgEdit" src={props.userInfo.avatarImgUrl === ''?photo:'http://localhost:8080/'+props.userInfo.avatarImgUrl}  alt='preview'/>
+                            <img id="previewImgEdit" src={props.userInfo.avatarImgUrl === ''?photo:serverUrl+props.userInfo.avatarImgUrl}  alt='preview'/>
                         </div>
                     </div>
                     <div className='edit-profile-info-box'>

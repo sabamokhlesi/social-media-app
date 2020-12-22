@@ -3,8 +3,9 @@ import './spinner.scss'
 
 const spinner = (props) => {
     return (
-        <div className='loader-spinner'>
-            Loading...
+        <div class="loader">
+            <div class="circle"></div>
+            <div class="circle"></div>
         </div>
     )
 }

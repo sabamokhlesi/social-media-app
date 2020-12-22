@@ -34,6 +34,9 @@ class Post extends React.Component {
         this.props.profileClicked()
         }
     render(){
+        const serverUrl = 'https://socialmedia-backend.herokuapp.com/'
+        // const serverUrl = 'http://localhost:8080/'
+
         let count = 0 
         let timer = 0
         const onDoubleClick=()=>{
@@ -54,7 +57,7 @@ class Post extends React.Component {
             <div onClick={onDoubleClick} className='post' style={this.props.style}>
                 <div className='post-top'>
                     <div className='post-top-left' onClick={()=>this.userProfileHandler(this.props.postInfo.creator.userInfo.userName)}>
-                        <div className='post-top-img-box'><img src={this.props.postInfo.creator.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+this.props.postInfo.creator.userInfo.avatarImgUrl:photo} alt="Jane Smith"/></div>
+                        <div className='post-top-img-box'><img src={this.props.postInfo.creator.userInfo.avatarImgUrl !== ''?serverUrl+this.props.postInfo.creator.userInfo.avatarImgUrl:photo} alt="Jane Smith"/></div>
                         <h4>{this.props.postInfo.creator.userInfo.name!== ''?this.props.postInfo.creator.userInfo.name:this.props.postInfo.creator.userInfo.userName}</h4>
                     </div>
                     <div className='post-top-delete-box' style={this.props.postInfo.creator._id === this.props.userId? {display:'block'}:{display:'none'}}>
@@ -62,7 +65,7 @@ class Post extends React.Component {
                         <div style={this.state.deleteOpen?{display:'block'}:{display:'none'}} onClick={this.props.deleteHandler} className='post-top-delete'>delete post</div>
                     </div>
                 </div>
-                <img className='post-photo' src={'http://localhost:8080/'+this.props.postInfo.imageUrl} alt="example"/>
+                <img className='post-photo' src={serverUrl+this.props.postInfo.imageUrl} alt="example"/>
                 <div className='post-likebar'>
                     {!this.state.liked?<FaRegHeart onClick={onDoubleClick}/>:<FaHeart onClick={onDoubleClick}/>}
                     <FaRegComment/>
@@ -77,7 +80,7 @@ class Post extends React.Component {
                         {this.props.postInfo.comments.map(comment=>{return(
                             <div className='post-comment'>
                                 <div className='post-comment-title' onClick={()=>this.userProfileHandler(comment.userId.userInfo.userName)}>
-                                    <div className='post-comment-img-box'><img src={'http://localhost:8080/'+comment.userId.userInfo.avatarImgUrl} alt={comment.userId.userName}/></div>
+                                    <div className='post-comment-img-box'><img src={serverUrl+comment.userId.userInfo.avatarImgUrl} alt={comment.userId.userName}/></div>
                                     <h4>{comment.userId.userInfo.name !== ''?comment.userId.userInfo.name:comment.userId.userName} </h4>
                                     <p> {comment.content}</p>
                                 </div>

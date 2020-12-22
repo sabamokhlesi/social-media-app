@@ -5,6 +5,9 @@ import photo from '../../../images/avatar-preview.jpg'
 import { useHistory } from "react-router-dom"
 import Spinner from '../../../components/spinner/spinner'
 const SearchPage = (props) => {
+    const serverUrl = 'https://socialmedia-backend.herokuapp.com/'
+    // const serverUrl = 'http://localhost:8080/'
+
     const history = useHistory();
     const linkHandler = (userName)=>{
         props.gettingUser(userName,props.token)
@@ -29,7 +32,7 @@ const SearchPage = (props) => {
                     {!props.loading?
                     props.results.map(user=>
                         <div className='search-result' onClick={()=>linkHandler(user.userInfo.userName)}>
-                            <div className='search-result-img-box'><img src={user.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+user.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
+                            <div className='search-result-img-box'><img src={user.userInfo.avatarImgUrl !== ''?serverUrl+user.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
                             <h5>{user.userInfo.name !== ''? user.userInfo.name:user.userInfo.userName}</h5>
                             <p> (@{user.userInfo.userName})</p>
                         </div>

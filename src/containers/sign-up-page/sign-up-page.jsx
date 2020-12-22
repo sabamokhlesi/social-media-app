@@ -1,10 +1,10 @@
 import React from 'react'
 import './sign-up-page.scss'
 import {Link} from 'react-router-dom'
-// import SignUpImg from '../../images/4.png'
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/spinner/spinner'
+import { withRouter } from "react-router-dom"
 
 class SignUpPage extends React.Component{
     state = {
@@ -23,6 +23,7 @@ class SignUpPage extends React.Component{
         if (!emailPattern.test(this.signUpEmail.value)){message= 'invalid email'; valid = false}
         if(message === null){
             this.props.onSignUp(this.signUpEmail.value,this.signUpPass.value,this.userName.value,valid);
+            this.props.history.push('/')
             this.signUpPass.value = ''
             this.signUpPassRepeat.value =''
             this.userName.value=''
@@ -81,4 +82,4 @@ const mapDispatchToProps = dispatch => {
         onSignUp : (email,password,userName,isValid) => dispatch(actions.addUser(email,password,userName,isValid))
     }
 } 
-export default connect(mapStateToProps,mapDispatchToProps)(SignUpPage)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(SignUpPage))

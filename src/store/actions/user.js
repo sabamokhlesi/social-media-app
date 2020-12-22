@@ -7,8 +7,8 @@ export const fetchUserInfoStart =() => {return{type: actionTypes.FETCH_USERINFO_
 export const fetchUserInfo = (token,userId) =>{
     return dispatch => {
         dispatch(fetchUserInfoStart())
-        fetch(`http://localhost:8080/account/user-info/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/account/user-info/${userId}`, {
+        // fetch(`http://localhost:8080/account/user-info/${userId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/account/user-info/${userId}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -21,7 +21,6 @@ export const fetchUserInfo = (token,userId) =>{
     }
 }
 
-
 export const saveChangedSettingsInfoSuccess = (newInfo) =>{return{type: actionTypes.SAVE_SETTINGS_CHANGES_SUCCESS,newInfo: newInfo }}
 export const saveChangedSettingsInfoFail = (error) => {return{type: actionTypes.SAVE_SETTINGS_CHANGES_FAIL,error: error}}
 export const saveChangedSettingsInfoStart =() => {return{type: actionTypes.SAVE_SETTINGS_CHANGES_START}}
@@ -33,8 +32,8 @@ export const saveChangedSettingsInfo =(newInfo,token,userId)=>{
     formData.append('image', newInfo.avatarImgUrl)
     return dispatch => {
         dispatch(saveChangedSettingsInfoStart())
-        fetch(`http://localhost:8080/account/user-info/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/account/user-info/${userId}`, {
+        // fetch(`http://localhost:8080/account/user-info/${userId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/account/user-info/${userId}`, {
             method: 'PUT',body:formData ,headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -46,29 +45,6 @@ export const saveChangedSettingsInfo =(newInfo,token,userId)=>{
     }
 }
 
-
-// export const followSuccess = (newFollowing) =>{return{type: actionTypes.FOLLOW_SUCCESS,newFollowing: newFollowing }}
-// export const followFail = (error) => {return{type: actionTypes.FOLLOW_FAILED,error: error}}
-// export const followStart =() => {return{type: actionTypes.FOLLOW_START}}
-
-// export const follow =(newFollowing,token,userId)=>{
-//     return dispatch => {
-//         dispatch(followStart())
-//         fetch(`http://localhost:8080/social-media/user-followings/${userId}`, {
-//         // fetch(`https://social-media-app-backend.herokuapp.com/social-media/user-followings/${userId}`, {
-//             method: 'put',body:JSON.stringify(newFollowing) ,headers: {Authorization: 'Bearer ' + token,'Content-Type': 'application/json'}
-//         })
-//         .then(res => {
-//         if (res.status !== 200 && res.status !== 201) {throw new Error('Following new user failed!');}
-//         return res.json();
-//         })
-//         .then(res =>{dispatch(followSuccess(newFollowing))})
-//         .catch(err=>{dispatch(followFail(err))})
-//     }
-// }
-
-
-
 export const followUnfollowSuccess = (userId,followingUserId,action) =>{return{type: actionTypes.FOLLOW_UNFOLLOW_SUCCESS,userId:userId,followingUserId: followingUserId,action:action }}
 export const followUnfollowFail = (error) => {return{type: actionTypes.FOLLOW_UNFOLLOW_FAIL,error: error}}
 export const followUnfollowStart =() => {return{type: actionTypes.FOLLOW_UNFOLLOW_START}}
@@ -76,8 +52,8 @@ export const followUnfollowStart =() => {return{type: actionTypes.FOLLOW_UNFOLLO
 export const followUnfollow =(userId,followingUserId,action,token)=>{
     return dispatch => {
         dispatch(followUnfollowStart())
-        fetch(`http://localhost:8080/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/account/followings/${postId}`, {
+        // fetch(`http://localhost:8080/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
+        fetch(`https://buddy-app-backend.herokuapp.com/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
             method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -97,8 +73,8 @@ export const getUserStart =() => {return{type: actionTypes.GET_USER_START}}
 export const getUser = (userName,token) =>{
     return dispatch => {
         dispatch(getUserStart())
-        fetch(`http://localhost:8080/feed/users/${userName}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/feed/users/${userName}`, {
+        // fetch(`http://localhost:8080/feed/users/${userName}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/feed/users/${userName}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -119,8 +95,8 @@ export const searchUsersStart =() => {return{type: actionTypes.SEARCH_USERS_STAR
 export const searchUsers = (searchedKey,token) =>{
     return dispatch => {
         dispatch(searchUsersStart())
-        fetch(`http://localhost:8080/feed/search-users/${searchedKey}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/feed/search-users/${searchedKey}`, {
+        // fetch(`http://localhost:8080/feed/search-users/${searchedKey}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/feed/search-users/${searchedKey}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -140,8 +116,8 @@ export const fetchSuggestedUsersStart =() => {return{type: actionTypes.FETCH_SUG
 export const fetchSuggestedUsers = (token,userId) =>{
     return dispatch => {
         dispatch(fetchSuggestedUsersStart())
-        fetch(`http://localhost:8080/feed/get-users/${userId}`, {
-        // fetch(`https://social-media-app-backend.herokuapp.com/feed/get-users/${userId}`, {
+        // fetch(`http://localhost:8080/feed/get-users/${userId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/feed/get-users/${userId}`, {
             method: 'GET',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {

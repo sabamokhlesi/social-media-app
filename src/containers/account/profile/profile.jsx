@@ -7,6 +7,8 @@ import Spinner from '../../../components/spinner/spinner'
 import { useHistory } from "react-router-dom"
 
 const Profile = (props) => {
+    const serverUrl = 'https://socialmedia-backend.herokuapp.com/'
+    // const serverUrl = 'http://localhost:8080/'
 
     const history = useHistory();
     const linkHandler = (userName)=>{
@@ -17,7 +19,7 @@ const Profile = (props) => {
     const posts = 
     props.posts?
     <div className='profile-posts'>
-        {props.posts.map(post=><div className='profile-post' style={{backgroundImage:`url(http://localhost:8080/${post.imageUrl})`}} onClick={props.postShow} key={post._id} id={post._id}>
+        {props.posts.map(post=><div className='profile-post' style={{backgroundImage:serverUrl+post.imageUrl+')'}} onClick={props.postShow} key={post._id} id={post._id}>
         </div>)}
     </div>:<div style={{textAlign:'center',padding:'1rem'}}>No post found</div>
 
@@ -26,7 +28,7 @@ const Profile = (props) => {
     <div className='profile-followers'>
         {props.userInfo.followers.map(follower=>
             <div className='search-result' onClick={()=>linkHandler(follower.userInfo.userName)}>
-                <div className='search-result-img-box'><img src={follower.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+follower.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
+                <div className='search-result-img-box'><img src={follower.userInfo.avatarImgUrl !== ''?serverUrl+follower.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
                 <h5>{follower.userInfo.name !== ''? follower.userInfo.name:follower.userInfo.userName}</h5>
                 <p> (@{follower.userInfo.userName})</p>
             </div>
@@ -38,7 +40,7 @@ const Profile = (props) => {
     <div className='profile-followings'>
         {props.userInfo.followings.map(following=>
             <div className='search-result' onClick={()=>linkHandler(following.userInfo.userName)}>
-                <div className='search-result-img-box'><img src={following.userInfo.avatarImgUrl !== ''?'http://localhost:8080/'+following.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
+                <div className='search-result-img-box'><img src={following.userInfo.avatarImgUrl !== ''?serverUrl+following.userInfo.avatarImgUrl:photo} alt="Buddy user"/></div>
                 <h5>{following.userInfo.name !== ''? following.userInfo.name:following.userInfo.userName}</h5>
                 <p> (@{following.userInfo.userName})</p>
             </div>
@@ -48,12 +50,12 @@ const Profile = (props) => {
     return (
         
         <div className='profile'>
-            {props.loading && !props.userName?
+            {props.loading && !props.userName && !props.userInfo.followers?
             <Spinner/>
             :
             <React.Fragment>
                 <div className='profile-top'>
-                    <div className='profile-top-img-box'><img src={props.userInfo.avatarImgUrl === ''?photo:'http://localhost:8080/'+props.userInfo.avatarImgUrl} alt="profile"/></div>
+                    <div className='profile-top-img-box'><img src={props.userInfo.avatarImgUrl === ''?photo:serverUrl+props.userInfo.avatarImgUrl} alt="profile"/></div>
                     <div className='profile-top-name'>
                         <div className='profile-top-items-box'>
                             <div className='profile-top-items-left'>

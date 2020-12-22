@@ -10,17 +10,14 @@ export const createPost = (postInfo,token) =>{
     formData.append('image', postInfo.image)
     return dispatch => {
         dispatch(postStart())
-        fetch('http://localhost:8080/account/post', 
-        // fetch('https://buddy-app-backend.herokuapp.com/account/post', 
+        // fetch('http://localhost:8080/account/post', 
+        fetch('https://socialmedia-backend.herokuapp.com/account/post', 
             {method: 'POST',body:formData, headers: {Authorization: 'Bearer ' + token}})
         .then(res => {
             if (res.status !== 200 && res.status !== 201) {throw new Error('Creating the post failed!');}
             return res.json();
             })
         .then(res =>{
-            // console.log(res.post)
-            // const image = 'http://localhost:8080/' + res.post.imageUrl
-            // console.log(image)
             dispatch(postSuccess(res.post))
         })
         .catch(err=>{dispatch(postFailed(err))})
@@ -36,8 +33,8 @@ export const deletePost = (postId,token) =>{
     return dispatch => {
         dispatch(deletePostStart())
         console.log(postId)
-        fetch(`http://localhost:8080/account/post/${postId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/account/post/${postId}`, {
+        // fetch(`http://localhost:8080/account/post/${postId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/account/post/${postId}`, {
             method: 'DELETE',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -58,8 +55,8 @@ export const fetchPosts = (token,userId) =>{
     return dispatch => {
         dispatch(fetchPostsStart())
             
-        fetch(`http://localhost:8080/account/posts/${userId}`
-        // fetch(`https://buddy-app-backend.herokuapp.com/account/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
+        // fetch(`http://localhost:8080/account/posts/${userId}`
+        fetch(`https://socialmedia-backend.herokuapp.com/account/posts/${userId}`
             ,{method: 'GET',headers: {Authorization: 'Bearer ' + token}})
             .then(res => {
                 if (res.status !== 200) {throw new Error('Failed to fetch posts.')}
@@ -78,8 +75,8 @@ export const fetchFeedPosts = (userId,token) =>{
     return dispatch => {
         dispatch(fetchFeedPostsStart())
             
-        fetch(`http://localhost:8080/feed/posts/${userId}`
-        // fetch(`https://buddy-app-backend.herokuapp.com/feed/posts/${userId}?fromDate=${fromDate}&toDate=${toDate}`
+        // fetch(`http://localhost:8080/feed/posts/${userId}`
+        fetch(`https://socialmedia-backend.herokuapp.com/feed/posts/${userId}`
             ,{method: 'GET',headers: {Authorization: 'Bearer ' + token}})
             .then(res => {
                 if (res.status !== 200) {throw new Error('Failed to fetch posts.')}
@@ -98,8 +95,8 @@ export const postLikeDislike = (action,postId,userId,token) =>{
     return dispatch => {
         dispatch(likeDislikePostStart())
         
-        fetch(`http://localhost:8080/account/post/${postId}?action=${action}&userId=${userId}`, {
-        // fetch(`https://buddy-app-backend.herokuapp.com/account/post/${postId}`, {
+        // fetch(`http://localhost:8080/account/post/${postId}?action=${action}&userId=${userId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/account/post/${postId}?action=${action}&userId=${userId}`, {
             method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
@@ -123,8 +120,8 @@ export const postComment = (postId,postCreatorId,userId,commentData,token,feedPo
         const info = {userId:userId,comment:commentData.comment}
 
         dispatch(commentStart())
-        fetch(`http://localhost:8080/account/comment/${postId}`, 
-        // fetch(`https://buddy-app-backend.herokuapp.com/account/comment/${postId}`, 
+        // fetch(`http://localhost:8080/account/comment/${postId}`, 
+        fetch(`https://socialmedia-backend.herokuapp.com/account/comment/${postId}`, 
             {method: 'POST',body:JSON.stringify(info), headers: {Authorization: 'Bearer ' + token, 'Content-Type':'application/json'}})
         .then(res => {
             if (res.status !== 200 && res.status !== 201) {throw new Error('Creating the comment failed!');}

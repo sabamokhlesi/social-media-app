@@ -22,7 +22,7 @@ const initialState ={
 
 const reducer = (state=initialState,action) => {
     switch(action.type){
-        case actionTypes.FETCH_USERINFO_START:return{...state, loading:true, error:null}
+        case actionTypes.FETCH_USERINFO_START:return{...state, loading:true, error:null,userInfo:initialState.userInfo}
         case actionTypes.FETCH_USERINFO_SUCCESS:return{...state, userInfo:action.userInfo, loading:false, error:null}
         case actionTypes.FETCH_USERINFO_FAILED:return{...state, loading:false, error:action.error}
 
