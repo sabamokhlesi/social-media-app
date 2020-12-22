@@ -20,9 +20,7 @@ const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)))
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter 
-    basename='/social-media/'
-    >
+    <BrowserRouter  basename='/social-media-app/'>
       <React.StrictMode>
         <App />
       </React.StrictMode>

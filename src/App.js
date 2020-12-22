@@ -22,7 +22,7 @@ class App extends React.Component{
               <Route path='/' exact component={SignUpPage}/>
               <Route path='/sign-up' exact component={SignUpPage}/>
               <Route path='/sign-in' exact component={SignInPage}/>
-              <Redirect to='/sign-up'/>
+              <Redirect to='/'/>
             </Switch>
         :<Account/>}
       </div>
