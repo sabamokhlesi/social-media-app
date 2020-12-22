@@ -53,7 +53,7 @@ export const followUnfollow =(userId,followingUserId,action,token)=>{
     return dispatch => {
         dispatch(followUnfollowStart())
         // fetch(`http://localhost:8080/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
-        fetch(`https://buddy-app-backend.herokuapp.com/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
+        fetch(`https://socialmedia-backend.herokuapp.com/account/followings/${userId}?action=${action}&followingUserId=${followingUserId}`, {
             method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
