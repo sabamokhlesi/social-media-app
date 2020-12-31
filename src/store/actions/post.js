@@ -32,7 +32,6 @@ export const deletePostSuccess =(id) =>{return{type:actionTypes.DELETE_POST_SUCC
 export const deletePost = (postId,token) =>{
     return dispatch => {
         dispatch(deletePostStart())
-        console.log(postId)
         // fetch(`http://localhost:8080/account/post/${postId}`, {
         fetch(`https://socialmedia-backend.herokuapp.com/account/post/${postId}`, {
             method: 'DELETE',headers: {Authorization: 'Bearer ' + token}

@@ -33,18 +33,17 @@ export const addUser = (email,password,userName,isValid) =>{
         fetch(url, {method:'PUT',headers: {'Content-Type': 'application/json'},body: JSON.stringify(authData)})
         .then(res => {
             if (res.status === 422) {throw new Error('Validation failed.');}
-            if (res.status !== 200 && res.status !== 201) {console.log('Error!');throw new Error('Could not authenticate you!');}
+            if (res.status !== 200 && res.status !== 201) {throw new Error('Could not authenticate you!');}
             return res.json();
           })
         .then(res => {
-            console.log(res)
             localStorage.setItem("token",res.token)
             localStorage.setItem("userID",res.userId)
             const expirationDate = new Date(new Date().getTime()+ res.expirationTime.toString()*3600000)
             localStorage.setItem("expirationDate",expirationDate)
             dispatch(authSuccess(res.token,res.userId))
         })
-        .catch(err=>{dispatch(authFail(err));console.log(err)})
+        .catch(err=>{dispatch(authFail(err))})
     }
 }
 
@@ -57,7 +56,7 @@ export const userSignIn = (email,password) =>{
         // fetch('http://localhost:8080/auth/login', {method: 'POST',headers: {'Content-Type': 'application/json'},body: JSON.stringify(authData)})
         .then(res => {
             if (res.status === 422) {throw new Error('Validation failed.');}
-            if (res.status !== 200 && res.status !== 201) {console.log('Error!');throw new Error('Could not authenticate you!');}
+            if (res.status !== 200 && res.status !== 201) {throw new Error('Could not authenticate you!');}
             return res.json();
           })
         .then(res => {
@@ -67,7 +66,7 @@ export const userSignIn = (email,password) =>{
             localStorage.setItem("userID",res.userId)
             dispatch(authSuccess(res.token,res.userId))
         })
-        .catch(err=>{dispatch(authFail(err));console.log(err)})
+        .catch(err=>{dispatch(authFail(err))})
     }
 }
 

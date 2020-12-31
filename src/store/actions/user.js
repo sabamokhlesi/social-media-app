@@ -57,7 +57,6 @@ export const followUnfollow =(userId,followingUserId,action,token)=>{
             method: 'PUT',headers: {Authorization: 'Bearer ' + token}
         })
         .then(res => {
-            console.log('userId: ',userId,'followingUserId: ',followingUserId,'action: ',action,'token: ',token)
         if (res.status !== 200 && res.status !== 201) {throw new Error(action+'failed!');}
         return res.json();
         })
