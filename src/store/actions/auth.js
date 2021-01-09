@@ -6,9 +6,9 @@ export const authFail = (error) => {return {type: actionTypes.AUTH_FAIL, error: 
 
 
 export const logout = ()=>{
-    localStorage.removeItem('token')
-    localStorage.removeItem('expirationDate')
-    localStorage.removeItem('userID')
+    localStorage.removeItem('tokenBuddy')
+    localStorage.removeItem('expirationDateBuddy')
+    localStorage.removeItem('userIDBuddy')
     return{
         type:actionTypes.AUTH_LOGOUT
     }
@@ -37,10 +37,10 @@ export const addUser = (email,password,userName,isValid) =>{
             return res.json();
           })
         .then(res => {
-            localStorage.setItem("token",res.token)
-            localStorage.setItem("userID",res.userId)
+            localStorage.setItem("tokenBuddy",res.token)
+            localStorage.setItem("userIDBuddy",res.userId)
             const expirationDate = new Date(new Date().getTime()+ res.expirationTime.toString()*3600000)
-            localStorage.setItem("expirationDate",expirationDate)
+            localStorage.setItem("expirationDateBuddy",expirationDate)
             dispatch(authSuccess(res.token,res.userId))
         })
         .catch(err=>{dispatch(authFail(err))})
@@ -61,9 +61,9 @@ export const userSignIn = (email,password) =>{
           })
         .then(res => {
             const expirationDate = new Date(new Date().getTime()+ res.expirationTime.toString()*3600000)
-            localStorage.setItem("token",res.token)
-            localStorage.setItem("expirationDate",expirationDate)
-            localStorage.setItem("userID",res.userId)
+            localStorage.setItem("tokenBuddy",res.token)
+            localStorage.setItem("expirationDateBuddy",expirationDate)
+            localStorage.setItem("userIDBuddy",res.userId)
             dispatch(authSuccess(res.token,res.userId))
         })
         .catch(err=>{dispatch(authFail(err))})
@@ -74,15 +74,15 @@ export const userSignIn = (email,password) =>{
 
 export const checkSignIn = () => {
     return dispatch => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('tokenBuddy');
         if (!token) {
             dispatch(logout());
         } else {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            const expirationDate = new Date(localStorage.getItem('expirationDateBuddy'));
             if (expirationDate <= new Date()) {
                 dispatch(logout());
             } else {
-                const userId = localStorage.getItem('userID');
+                const userId = localStorage.getItem('userIDBuddy');
                 dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
             }   
